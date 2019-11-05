@@ -1,10 +1,7 @@
-language: bash
+language: node_js
 
 sudo: required
 
-services:
-- docker
-
 scripts:
-echo "initial setup"
+- npm run test
 
