@@ -1,0 +1,18 @@
+{
+    "name": "pdp-2019",
+    "version": "1.0.0",
+    "description": "nothing to see here yet",
+    "main": "index.js",
+    "scripts": {
+      "test": "exit 0"
+    },
+    "author": "Anton Kozachko",
+    "license": "MIT",
+    "devDependencies": {
+      "lerna": "^3.4.3"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git@github.com:AntonKozachko/pdp-2019.git"
+    }
+  }
