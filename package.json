@@ -5,7 +5,8 @@
     "main": "index.js",
     "scripts": {
       "test": "exit 0",
-      "lint:auth": "npm --prefix auth-service run lint"
+      "lint:auth": "npm --prefix auth-service run lint",
+      "ci:lint": "npm run lint:auth"
     },
     "author": "Anton Kozachko",
     "license": "MIT",
