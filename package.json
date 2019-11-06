@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
       "test": "exit 0",
+      "launch:auth": "npm --prefix auth-service run start",
       "lint:auth": "npm --prefix auth-service run lint",
       "install:auth-service": "bash devops/scripts/install-auth-svc.sh",
       "ci:lint": "npm run lint:auth",

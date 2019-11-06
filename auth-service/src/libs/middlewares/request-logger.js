@@ -12,7 +12,6 @@ const log = logger.get();
 function requestLoggerMiddleware (req, res, next) {
   const headerName = 'x-request-id';
   const id = req.headers[headerName] || uuid.v4();
-  const { body } = req;
 
   req.log = log.child({
     type: 'request',

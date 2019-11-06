@@ -13,7 +13,7 @@ export async function authenticate (req, res, next) {
 
   if (!user) return next('No such user or password is incorrect');
 
-  jwt.sign({ sub: user.id }, config.secret, { expiresIn: '30m' }, (err, token) => {
+  return jwt.sign({ sub: user.id }, config.secret, { expiresIn: '30m' }, (err, token) => {
     if (err) {
       log.error(err);
 

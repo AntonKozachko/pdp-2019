@@ -6,8 +6,8 @@ const config = require('../config.json');
 const publicRoutes = [
   '/user/authenticate',
   '/user/verify',
-  /\/api-docs*/,
   /favicon.ico/,
+  /\/api-docs*/,
 ];
 
 export function jwt () {

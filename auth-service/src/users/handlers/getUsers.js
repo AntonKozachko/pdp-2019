@@ -1,7 +1,4 @@
 import { users } from '../mock';
-import logger from '../../libs/logger';
-
-const log = logger.get('users/');
 
 function getAll () {
   return users.map((u) => {
@@ -12,7 +9,7 @@ function getAll () {
 }
 
 export function getUsers (req, res) {
-  const users = getAll();
+  const allUsers = getAll();
 
-  return res.json(users);
+  return res.json(allUsers);
 }

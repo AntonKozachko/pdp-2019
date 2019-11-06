@@ -1,5 +1,6 @@
 import { isString } from 'lodash';
 
+// eslint-disable-next-line
 export function jwtErrorHandler (err, req, res, next) {
   if (isString(err)) {
     // custom application error

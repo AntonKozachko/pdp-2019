@@ -1,3 +1,4 @@
+/* eslint-disable */
 import bunyan from 'bunyan';
 import bunyanFormat from 'bunyan-format';
 import _ from 'lodash';
