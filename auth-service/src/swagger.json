@@ -29,7 +29,7 @@
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "scheme": "Bearer",
+        "scheme": "bearer",
         "bearerFormat": "JWT"
       }
     }
@@ -61,13 +61,9 @@
         "tags": ["User"],
         "description": "Validate user token",
         "summary": "Validate user token",
-        "parameters": [
+        "security": [
           {
-            "name": "authorization",
-            "in": "header",
-            "description": "Bearer token",
-            "type": "string",
-            "required": true
+            "bearerAuth": []
           }
         ],
         "produces": [

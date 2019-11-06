@@ -4,6 +4,6 @@ node_js:
 
 sudo: required
 
-scripts:
-- npm run test
-
+script:
+- npm run ci:install
+- npm run ci:lint
