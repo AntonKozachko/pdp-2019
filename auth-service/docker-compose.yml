@@ -4,6 +4,11 @@ services:
     build: .
     ports:
     - "9000:9000"
+    environment:
+    - AUTH_PORT=9000
+    - NODE_ENV=development
+    - ISOLATED_MODE=false
+    - LOG_LEVEL=info
     depends_on:
     - mongo
   mongo:
