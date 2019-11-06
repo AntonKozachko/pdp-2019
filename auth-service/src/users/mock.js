@@ -1,4 +1,4 @@
-import faker from 'faker'
+import faker from 'faker';
 
 export const users = [
   {
@@ -28,4 +28,4 @@ export const users = [
     votes: faker.random.number(),
     age: faker.random.number(),
   },
-]
+];

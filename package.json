@@ -4,7 +4,8 @@
     "description": "nothing to see here yet",
     "main": "index.js",
     "scripts": {
-      "test": "exit 0"
+      "test": "exit 0",
+      "lint:auth": "npm --prefix auth-service run lint"
     },
     "author": "Anton Kozachko",
     "license": "MIT",
