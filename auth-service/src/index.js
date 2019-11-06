@@ -11,11 +11,13 @@ import { jwt } from './helpers/jwt';
 import { jwtErrorHandler } from './helpers/error-handler';
 
 import { userRouter } from './users';
+import { connectUsersDb } from './helpers/mongo-connection';
 
 import swaggerDocument from './swagger.json';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
+process.env.ISOLATED_MODE = process.env.ISOLATED_MODE || true;
 
 const log = logger.get('AUTH-SVC', { ignoreLogLevel: true });
 
@@ -25,6 +27,7 @@ const port = process.env.AUTH_PORT || 9000;
 log.info(`[NODE_ENV = ${process.env.NODE_ENV}]`);
 log.info(`[LOG_LEVEL = ${process.env.LOG_LEVEL}]`);
 log.info(`[AUTH_PORT = ${process.env.AUTH_PORT}]`);
+log.info(`[ISOLATED_MODE = ${process.env.ISOLATED_MODE}]`);
 
 function onError (error) {
   if (error.syscall !== 'listen') {
@@ -77,6 +80,10 @@ app.use(jwtErrorHandler);
 // swagger setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', userRouter);
+
+if (!process.env.ISOLATED_MODE) {
+  connectUsersDb().then(() => console.log('Users DB connected'));
+}
 
 server = http.createServer(app);
 server.listen(port);
