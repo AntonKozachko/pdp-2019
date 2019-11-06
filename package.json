@@ -6,7 +6,9 @@
     "scripts": {
       "test": "exit 0",
       "lint:auth": "npm --prefix auth-service run lint",
-      "ci:lint": "npm run lint:auth"
+      "install:auth-service": "bash devops/scripts/install-auth-svc.sh",
+      "ci:lint": "npm run lint:auth",
+      "ci:install": "npm run install:auth-service"
     },
     "author": "Anton Kozachko",
     "license": "MIT",
