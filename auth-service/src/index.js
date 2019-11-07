@@ -12,12 +12,14 @@ import { jwtErrorHandler } from './helpers/error-handler';
 
 import { userRouter } from './users';
 import { connectUsersDb } from './helpers/mongo-connection';
+import { loadFixtures } from './helpers/fixture-loader';
 
 import swaggerDocument from './swagger.json';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
 process.env.MODE = process.env.MODE || 'isolated';
+process.env.MONGO_HOST = process.env.MONGO_HOST || 'localhost';
 process.env.MONGO_PORT = process.env.MONGO_PORT || '27017';
 
 const log = logger.get('AUTH-SVC', { ignoreLogLevel: true });
@@ -88,7 +90,9 @@ if (process.env.MODE === 'normal') {
 
   connectUsersDb()
     .then(() => log.info(`Db connected on port ${process.env.MONGO_PORT}`))
-    .catch(() => log.error('Error on DB connect'));
+    .then(() => loadFixtures())
+    .then(() => log.info('Fixture loading successful'))
+    .catch((err) => log.error(err));
 }
 
 server = http.createServer(app);

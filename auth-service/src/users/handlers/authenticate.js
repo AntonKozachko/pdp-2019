@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import logger from '../../libs/logger';
-import { users } from '../mock';
+import { User } from '../models/user.model';
 
 const config = require('../../config.json');
 
@@ -9,7 +9,9 @@ const log = logger.get('users/authenticate');
 export async function authenticate (req, res, next) {
   const { username, password } = req.body;
 
-  const user = users.find((u) => u.username === username && u.password === password);
+  const foundUserDoc = await User.findOne({ username, password });
+
+  const user = foundUserDoc.toObject();
 
   if (!user) return next('No such user or password is incorrect');
 

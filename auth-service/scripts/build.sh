@@ -2,6 +2,6 @@
 baseDir=$PWD
 echo $baseDir
 
-envFile="$baseDir/config/normal-dev.env"
+envFile="../../devops/config/normal-dev.env"
 
 env-cmd -f $envFile webpack --config ./webpack.config.js --mode development
