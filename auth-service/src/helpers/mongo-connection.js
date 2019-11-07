@@ -1,5 +1,4 @@
 import { connect } from 'mongoose';
-import { User } from '../users/models/user.model';
 
 const mongoPort = process.env.MONGO_PORT;
 

@@ -10,4 +10,4 @@ const userSchema = new Schema({
   age: Number,
 });
 
-export const User = model("User", userSchema);
+export const User = model('User', userSchema);

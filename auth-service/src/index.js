@@ -88,7 +88,7 @@ if (process.env.MODE === 'normal') {
 
   connectUsersDb()
     .then(() => log.info(`Db connected on port ${process.env.MONGO_PORT}`))
-    .catch(() => log.error('Error on DB connect'))
+    .catch(() => log.error('Error on DB connect'));
 }
 
 server = http.createServer(app);
