@@ -4,7 +4,6 @@
   "description": "Node.js Authorization API",
   "license": "MIT",
   "scripts": {
-    "start": "npm run launch:dev:local",
     "lint": "eslint src --ext .js",
     "lint:fix": "npm run lint -- --fix",
     "build": "bash scripts/build.sh",

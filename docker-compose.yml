@@ -1,13 +1,14 @@
 version: "2"
 services:
   auth-svc:
-    build: .
+    build: auth-service
     ports:
     - "${AUTH_PORT}:${AUTH_PORT}"
     env_file:
-    - ./config/normal-dev.env
+    - ./devops/config/normal-dev.env
     depends_on:
     - mongo
+
   mongo:
     image: mongo
     ports:
