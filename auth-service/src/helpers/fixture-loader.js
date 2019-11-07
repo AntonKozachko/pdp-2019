@@ -13,4 +13,4 @@ export const loadFixtures = () => {
     .then(() => fixtures.unload())
     .then(() => fixtures.load())
     .then(() => fixtures.disconnect());
-}
+};
