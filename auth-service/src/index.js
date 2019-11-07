@@ -91,7 +91,7 @@ if (process.env.MODE === 'normal') {
   connectUsersDb()
     .then(() => log.info(`Db connected on port ${process.env.MONGO_PORT}`))
     .then(() => loadFixtures())
-    .then(() => log.info('Fixture loading successful'))
+    .then(() => log.info('Load fixtures complete'))
     .catch((err) => log.error(err));
 }
 

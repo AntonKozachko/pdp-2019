@@ -56,6 +56,29 @@
         }
       }
     },
+    "/user/create": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create new user in system",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewUser"
+              },
+              "required": true
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/user/verify": {
       "post": {
         "tags": ["User"],
@@ -133,6 +156,33 @@
           "type": "string",
           "uniqueItems": true
         },
+        "username": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "number"
+        },
+        "age": {
+          "type": "number"
+        }
+      }
+    },
+    "NewUser": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
         "username": {
           "type": "string",
           "uniqueItems": true
