@@ -8,6 +8,7 @@
     "lint": "eslint src --ext .js",
     "lint:fix": "npm run lint -- --fix",
     "build": "bash scripts/build.sh",
+    "docker:auth:dev": "nodemon src/index-dev.js",
     "launch:dev": "bash scripts/launch-dev.sh",
     "launch:dev:normal": "bash scripts/launch-dev-normal.sh"
   },

@@ -3,15 +3,12 @@ services:
   auth-svc:
     build: .
     ports:
-    - "9000:9000"
-    environment:
-    - AUTH_PORT=9000
-    - NODE_ENV=development
-    - ISOLATED_MODE=false
-    - LOG_LEVEL=info
+    - "${AUTH_PORT}:${AUTH_PORT}"
+    env_file:
+    - ./config/normal-dev.env
     depends_on:
     - mongo
   mongo:
     image: mongo
     ports:
-    - "27017:27017"
+    - "${MONGO_PORT}:${MONGO_PORT}"

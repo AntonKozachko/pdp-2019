@@ -4,4 +4,4 @@ echo $baseDir
 
 ls -d $baseDir
 
-node "$baseDir/dist/auth-service/main.js"
+node ./src/index-dev.js
