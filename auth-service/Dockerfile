@@ -1,7 +1,7 @@
-FROM node:8
+FROM node:12
 
 # Create app directory
-WORKDIR /usr/src/auth-svc
+WORKDIR /app/auth-service
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -16,4 +16,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 9000
-CMD [ "npm", "run", "launch:dev" ]
+CMD [ "npm", "run", "docker:auth:dev" ]

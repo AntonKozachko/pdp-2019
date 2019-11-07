@@ -11,11 +11,14 @@ import { jwt } from './helpers/jwt';
 import { jwtErrorHandler } from './helpers/error-handler';
 
 import { userRouter } from './users';
+import { connectUsersDb } from './helpers/mongo-connection';
 
 import swaggerDocument from './swagger.json';
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
+process.env.MODE = process.env.MODE || 'isolated';
+process.env.MONGO_PORT = process.env.MONGO_PORT || '27017';
 
 const log = logger.get('AUTH-SVC', { ignoreLogLevel: true });
 
@@ -25,6 +28,7 @@ const port = process.env.AUTH_PORT || 9000;
 log.info(`[NODE_ENV = ${process.env.NODE_ENV}]`);
 log.info(`[LOG_LEVEL = ${process.env.LOG_LEVEL}]`);
 log.info(`[AUTH_PORT = ${process.env.AUTH_PORT}]`);
+log.info(`[MODE = ${process.env.MODE}]`);
 
 function onError (error) {
   if (error.syscall !== 'listen') {
@@ -69,6 +73,7 @@ app.use(cors());
 app.use(jwt());
 
 // api routes
+// todo: use api/v1 base path
 app.use('/user', userRouter);
 
 // global error handler
@@ -77,6 +82,14 @@ app.use(jwtErrorHandler);
 // swagger setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1', userRouter);
+
+if (process.env.MODE === 'normal') {
+  log.info('Connecting db...');
+
+  connectUsersDb()
+    .then(() => log.info(`Db connected on port ${process.env.MONGO_PORT}`))
+    .catch(() => log.error('Error on DB connect'));
+}
 
 server = http.createServer(app);
 server.listen(port);
