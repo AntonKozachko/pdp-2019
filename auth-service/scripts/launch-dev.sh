@@ -2,7 +2,7 @@
 baseDir=$PWD
 echo $baseDir
 
-envFile="$baseDir/config/isolated-dev.env"
+envFile="$baseDir/config/normal-dev.env"
 
 node -e "process.platform === 'win32' && process.exit(0) || process.exit(1)" && eval $(cat $envFile) && echo "Killing on port: $AUTH_PORT" && npx cross-port-killer $AUTH_PORT
 

@@ -1,15 +1,7 @@
-import { users } from '../mock';
+import { User } from '../models/user.model';
 
-function getAll () {
-  return users.map((u) => {
-    const { password, username, ...userData } = u;
+export async function getUsers (req, res) {
+  const foundUsers = await User.find({}, { password: false, username: false });
 
-    return userData;
-  });
-}
-
-export function getUsers (req, res) {
-  const allUsers = getAll();
-
-  return res.json(allUsers);
+  return res.json(foundUsers);
 }
