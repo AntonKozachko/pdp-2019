@@ -79,6 +79,7 @@ app.use(jwt());
 app.use('/user', userRouter);
 
 // global error handler
+// todo: Remove as redundant
 app.use(jwtErrorHandler);
 
 // swagger setup

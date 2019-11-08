@@ -1,11 +1,6 @@
-import { authenticate } from './authenticate';
-import { verify } from './verify';
-import { getUsers } from './getUsers';
-import { createUser } from './create-user';
-
-export default {
-  authenticate,
-  verify,
-  getUsers,
-  createUser,
-};
+export * from './authenticate';
+export * from './verify';
+export * from './get-all';
+export * from './register';
+export * from './update';
+export * from './delete';

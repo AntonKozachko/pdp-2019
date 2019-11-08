@@ -7,12 +7,11 @@ const config = require('../config.json');
 
 const log = logger.get('JWT', { ignoreLogLevel: true });
 
-
-// public routes that don't require authentication
+// public routes that doesn't require authentication
 const publicRoutes = [
   '/user/authenticate',
   '/user/verify',
-  '/user/create',
+  '/user',
   /favicon.ico/,
   /\/api-docs*/,
 ];

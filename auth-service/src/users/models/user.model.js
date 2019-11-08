@@ -1,4 +1,10 @@
 import { Schema, model } from 'mongoose';
+import uniqueValidator  from 'mongoose-unique-validator';
+
+import {
+  preSaveHook,
+  documentToObject,
+} from '../../helpers/mongo-helpers';
 
 const userSchema = new Schema({
   username: {
@@ -14,11 +20,11 @@ const userSchema = new Schema({
   },
   name: {
     type: String,
-    default: null,
+    required: true,
   },
   level: {
     type: String,
-    default: null,
+    default: '',
   },
   votes: {
     type: Number,
@@ -26,8 +32,25 @@ const userSchema = new Schema({
   },
   age: {
     type: Number,
-    default: null,
+    default: 0,
   },
+});
+
+const blacklist = [];
+
+userSchema.plugin(uniqueValidator);
+userSchema.post('save', documentToObject);
+
+userSchema.static('addToBlacklist', function(token) {
+  blacklist.push(token);
+});
+
+userSchema.static('isBlacklisted', function(token) {
+  return blacklist.includes(token);
+});
+
+userSchema.static('getBlacklist', function() {
+  return JSON.stringify(blacklist);
 });
 
 export const User = model('User', userSchema);

@@ -1,28 +1,31 @@
 import jwt from 'jsonwebtoken';
 import isEmpty from 'lodash/isEmpty';
+
+import { BaseController} from '../../helpers/base-controller';
 import logger from '../../libs/logger';
+import config from '../../config.json';
 
-const config = require('../../config.json');
+const log = logger.get('Verify_Token_Handler');
 
-const log = logger.get('users/verify');
+export class VerifyTokenHandler extends BaseController {
+  executeImpl() {
+    const { authorization = '' } = this.req.headers;
 
-export async function verify (req, res, next) {
-  const { headers: { authorization = '' } } = req;
+    const token = authorization.replace('Bearer ', '');
 
-  const token = authorization.replace('Bearer ', '');
+    if (isEmpty(token)) {
+      const error = 'Token is not provided';
+      log.error(error);
 
-  if (isEmpty(token)) {
-    const error = new Error('Token is not provided');
-    log.error(error);
-
-    return next(error);
-  }
-
-  return jwt.verify(token, config.secret, (err, decoded) => {
-    if (err) {
-      log.error(err);
-      return next(err);
+      return this.badRequest('Token is not provided');
     }
-    return res.json({ userId: decoded.sub });
-  });
+
+    return jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) {
+        log.error(err);
+        return this.jwtError(err);
+      }
+      return this.success({ userId: decoded.sub });
+    });
+  }
 }
