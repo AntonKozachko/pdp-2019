@@ -33,6 +33,9 @@ import configureStore from './configureStore';
 // Import i18n messages
 import { translationMessages } from './i18n';
 
+// AntDesign styles
+import 'antd/dist/antd.css';
+
 // Create redux store with history
 const initialState = {};
 const store = configureStore(initialState, history);
