@@ -1,8 +1,7 @@
 import { Schema, model } from 'mongoose';
-import uniqueValidator  from 'mongoose-unique-validator';
+import uniqueValidator from 'mongoose-unique-validator';
 
 import {
-  preSaveHook,
   documentToObject,
 } from '../../helpers/mongo-helpers';
 
@@ -41,15 +40,15 @@ const blacklist = [];
 userSchema.plugin(uniqueValidator);
 userSchema.post('save', documentToObject);
 
-userSchema.static('addToBlacklist', function(token) {
+userSchema.static('addToBlacklist', (token) => {
   blacklist.push(token);
 });
 
-userSchema.static('isBlacklisted', function(token) {
+userSchema.static('isBlacklisted', (token) => {
   return blacklist.includes(token);
 });
-
-userSchema.static('getBlacklist', function() {
+// todo: remove after check
+userSchema.static('getBlacklist', () => {
   return JSON.stringify(blacklist);
 });
 

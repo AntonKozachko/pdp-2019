@@ -1,42 +1,33 @@
-import jwt from 'jsonwebtoken';
 import isEmpty from 'lodash/isEmpty';
 
-import { BaseController} from '../../helpers/base-controller';
+import { BaseController } from '../../helpers/base-controller';
 import { User } from '../models/user.model';
 import logger from '../../libs/logger';
-import config from '../../config.json';
 
 const log = logger.get('Delete_Handler');
 
 export class DeleteHandler extends BaseController {
-  async executeImpl() {
-    const { authorization = '' } = this.req.headers;
+  async executeImpl () {
+    const { userId } = this.req;
 
-    const token = authorization.replace('Bearer ', '');
-
-    if (isEmpty(token)) {
-      log.error('Token is not provided');
+    if (isEmpty(userId)) {
+      log.error('Token is not provided or invalid');
       return this.forbidden();
     }
 
-    return jwt.verify(token, config.secret, async (err, decoded) => {
-      if (err) {
-        log.error(err);
-        return this.jwtError(err);
-      }
+    try {
+      log.info(`Delete user ${userId}`);
+      await User.deleteOne({ _id: userId });
 
-      try {
-        log.info(`Delete user ${decoded.sub}`)
-        let deletedUser = await User.deleteOne({ _id: decoded.sub });
+      const { authorization } = this.req.headers;
+      const token = authorization.replace('Bearer ', '');
 
-        // todo: add to blacklist token of deleted user
-        User.addToBlacklist(token);
+      User.addToBlacklist(token);
 
-        return this.success();
-      } catch (err) {
-        log.error(err);
-        return this.mongoError(err);
-      }
-    });
+      return this.success();
+    } catch (err) {
+      log.error(err);
+      return this.mongoError(err);
+    }
   }
 }

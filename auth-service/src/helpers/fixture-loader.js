@@ -11,13 +11,13 @@ const fixtures = new Fixtures({
   mute: false,
 });
 
-export async function loadFixtures() {
+export async function loadFixtures () {
   const count = await User.count();
 
   if (count) {
     log.info(`Found ${count} users. Skip loading users`);
     return;
-  };
+  }
 
   fixtures
     .connect(connection)
@@ -25,4 +25,4 @@ export async function loadFixtures() {
     .then(() => fixtures.load())
     .then(() => fixtures.disconnect())
     .then(() => log.info('Users loaded'));
-};
+}

@@ -5,13 +5,13 @@ import logger from '../../libs/logger';
 const log = logger.get('Register_User_Handler');
 
 export class RegisterHandler extends BaseController {
-  async executeImpl() {
+  async executeImpl () {
     const { body } = this.req;
 
     const NewUser = new User(body);
 
     try {
-      let user = await NewUser.save();
+      const user = await NewUser.save();
       return this.success(user);
     } catch (err) {
       log.error(err);

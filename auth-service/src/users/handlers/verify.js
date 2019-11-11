@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 import isEmpty from 'lodash/isEmpty';
 
-import { BaseController} from '../../helpers/base-controller';
+import { BaseController } from '../../helpers/base-controller';
 import logger from '../../libs/logger';
 import config from '../../config.json';
 
 const log = logger.get('Verify_Token_Handler');
 
 export class VerifyTokenHandler extends BaseController {
-  executeImpl() {
+  executeImpl () {
     const { authorization = '' } = this.req.headers;
 
     const token = authorization.replace('Bearer ', '');

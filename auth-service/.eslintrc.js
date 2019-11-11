@@ -6,7 +6,8 @@ module.exports = {
     'semi': ['error'],
     'space-before-function-paren': ['error', 'always'],
     'import/prefer-default-export': 'off',
-    "arrow-body-style": 'off'
+    "arrow-body-style": 'off',
+    'no-underscore-dangle': 'warn'
   },
   'env': {
     'node': true,
