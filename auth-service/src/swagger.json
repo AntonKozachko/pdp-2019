@@ -86,6 +86,11 @@
           "User"
         ],
         "summary": "Update user in system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
