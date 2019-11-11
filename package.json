@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "exit 0",
-    "install:web-app": "npm --prefix web-app run install",
-    "install:auth-service": "bash devops/scripts/install-auth-svc.sh",
+    "install:web-app": "npm --prefix web-app install",
+    "install:auth-service": "npm --prefix auth-service install",
     "launch:auth": "npm --prefix auth-service run launch:dev",
     "lint:auth": "npm --prefix auth-service run lint",
     "lint:web-app": "npm --prefix web-app run lint",
     "ci:lint": "run-p lint:auth lint:web-app",
     "ci:test": "npm --prefix web-app run test",
-    "ci:install": "run-p install:auth-service install:web-app"
+    "ci:install": "npm install && run-p install:auth-service install:web-app"
   },
   "author": "Anton Kozachko",
   "license": "MIT",
