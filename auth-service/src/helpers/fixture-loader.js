@@ -1,16 +1,28 @@
 import Fixtures from 'node-mongodb-fixtures';
 
+import { User } from '../users/models/user.model';
 import { connection } from './mongo-connection';
+import logger from '../libs/logger';
+
+const log = logger.get('FIXTURE-LOADER', { ignoreLogLevel: true });
 
 const fixtures = new Fixtures({
   dir: 'src/users/fixtures',
   mute: false,
 });
 
-export const loadFixtures = () => {
+export async function loadFixtures () {
+  const count = await User.count();
+
+  if (count) {
+    log.info(`Found ${count} users. Skip loading users`);
+    return;
+  }
+
   fixtures
     .connect(connection)
     .then(() => fixtures.unload())
     .then(() => fixtures.load())
-    .then(() => fixtures.disconnect());
-};
+    .then(() => fixtures.disconnect())
+    .then(() => log.info('Users loaded'));
+}

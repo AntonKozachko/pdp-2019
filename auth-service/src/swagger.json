@@ -38,7 +38,7 @@
     "/user/all": {
       "get": {
         "tags": [
-          "Users"
+          "User"
         ],
         "summary": "Get all users in system",
         "security": [
@@ -56,9 +56,77 @@
         }
       }
     },
+    "/user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create new user in system",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewUser"
+              },
+              "required": true
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update user in system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/UpdateUser"
+              },
+              "required": true
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete user from system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/user/verify": {
       "post": {
-        "tags": ["User"],
+        "tags": ["Auth"],
         "description": "Validate user token",
         "summary": "Validate user token",
         "security": [
@@ -87,7 +155,7 @@
     "/user/authenticate": {
       "post": {
         "tags": [
-          "User"
+          "Auth"
         ],
         "description": "Authenticate user with credential",
         "summary": "Authenticate user with username and password",
@@ -123,7 +191,6 @@
   "definitions": {
     "User": {
       "required": [
-        "email",
         "id",
         "username",
         "password"
@@ -151,15 +218,56 @@
         },
         "age": {
           "type": "number"
+        }
+      }
+    },
+    "NewUser": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "uniqueItems": true
         },
-        "authToken": {
+        "password": {
           "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "number"
+        },
+        "age": {
+          "type": "number"
         }
       }
     },
     "Users": {
       "type": "array",
       "$ref": "#/definitions/User"
+    },
+    "UpdateUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "votes": {
+          "type": "number"
+        },
+        "age": {
+          "type": "number"
+        }
+      }
     },
     "UserCredentials": {
       "type": "object",
