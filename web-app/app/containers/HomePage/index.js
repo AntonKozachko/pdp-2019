@@ -8,6 +8,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { PageHeader } from 'antd';
+import { UserBar } from '../UserBar/user-bar.component';
 
 import messages from './messages';
 
@@ -19,6 +20,7 @@ export default function HomePage() {
       backIcon="false"
     >
       <FormattedMessage {...messages.header} />
+      <UserBar/>
     </PageHeader>
   );
 }
