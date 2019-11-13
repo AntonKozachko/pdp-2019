@@ -8,3 +8,6 @@ script:
 - npm run ci:install
 - npm run ci:lint
 - npm run ci:test
+
+after_success:
+- npm run ci:build:auth
