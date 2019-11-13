@@ -12,7 +12,7 @@ export default function App() {
     <div>
       <AuthProvider>
         <Layout>
-          <Layout.Header style={{ backgroundColor: "none"}}>
+          <Layout.Header style={{ backgroundColor: 'none'}}>
             <Header />
           </Layout.Header>
           <Layout.Content>

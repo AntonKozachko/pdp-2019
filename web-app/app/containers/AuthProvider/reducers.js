@@ -17,4 +17,4 @@ export function responseReducer(state, action) {
     default:
       return initialAuthState;
   }
-};
+}

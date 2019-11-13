@@ -2,15 +2,30 @@
 
 exports[`<App /> should render and match the snapshot 1`] = `
 <div>
-  <Switch>
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/"
-    />
-    <Route
-      component={[Function]}
-    />
-  </Switch>
+  <AuthProvider>
+    <Adapter>
+      <Adapter
+        style={
+          Object {
+            "backgroundColor": "none",
+          }
+        }
+      >
+        <Header />
+      </Adapter>
+      <Adapter>
+        <Switch>
+          <Route
+            component={[Function]}
+            exact={true}
+            path="/"
+          />
+          <Route
+            component={[Function]}
+          />
+        </Switch>
+      </Adapter>
+    </Adapter>
+  </AuthProvider>
 </div>
 `;
