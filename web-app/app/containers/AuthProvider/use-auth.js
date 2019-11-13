@@ -1,5 +1,9 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
+import React, { useEffect, useContext, useReducer, createContext } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
+import get from 'lodash/get';
+
+import { responseReducer, initialAuthState, actions } from './reducers';
 
 const authContext = createContext();
 
@@ -8,59 +12,73 @@ export function AuthProvider({ children }) {
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
 
-export const useAuth = () => {
-  return useContext(authContext);
+AuthProvider.propTypes = {
+  children: PropTypes.node,
 };
 
+export const useAuth = () => useContext(authContext);
+
 function useProvideAuth() {
-  const [user, setUser] = useState(null);
+  const [user, dispatch] = useReducer(responseReducer, initialAuthState);
+
   const authInstance = axios.create({
-    baseURL: 'http://localhost:9000/user/',
+    baseURL: 'http://localhost:9000/user',
+    timeout: 1000,
   });
 
   const login = async (username, password) => {
+    dispatch({ type: actions.request });
+    let apiResponse;
+
     try {
-      const apiResponse = await authInstance.post('/authenticate', { username, password });
+      apiResponse = await authInstance.post('/authenticate', {
+        username,
+        password,
+      });
       const { data } = apiResponse;
-      setUser(data);
+      dispatch({ type: actions.success, payload: data });
     } catch (err) {
-      console.error(err);
-      setUser(null);
+      const errMsg = get(err, 'response.data.message', err.message);
+      dispatch({ type: actions.fail, payload: errMsg });
+      return Promise.reject(errMsg);
     }
+
+    return apiResponse;
   };
 
-  const register = async (username, password) => {
+  const register = async (username, password, name) => {
+    dispatch({ type: actions.request });
+    let apiResponse;
+
     try {
-      const apiResponse = await authInstance.post('/register', { username, password });
+      apiResponse = await authInstance.post('', { username, password, name });
       const { data } = apiResponse;
-      setUser(data);
+      dispatch({ type: actions.success, payload: data });
     } catch (err) {
-      console.error(err);
-      setUser(null);
+      const errMsg = get(err, 'response.data.message', err.message);
+      dispatch({ type: actions.fail, error: errMsg });
+      return Promise.reject(errMsg);
     }
+
+    return apiResponse;
+  };
+
+  const logout = () => {
+    dispatch({ type: actions.success, payload: null });
   };
 
   useEffect(() => {
     if (user && user.authToken) {
-      authInstance.defaults.headers.common['Authorization'] = `Bearer ${user.authToken}`;
+      authInstance.defaults.headers.common.Authorization = `Bearer ${
+        user.authToken
+      }`;
     }
   });
-
-  useEffect(() => {
-    const unsubscribe = (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    };
-
-    return () => unsubscribe();
-  }, []);
 
   return {
     user,
     login,
+    logout,
     register,
   };
 }
