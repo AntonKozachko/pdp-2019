@@ -1,0 +1,9 @@
+.user-info {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.auth-actions > button {
+  margin-right: 8px;
+}
