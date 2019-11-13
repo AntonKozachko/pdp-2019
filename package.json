@@ -10,6 +10,7 @@
     "launch:auth": "npm --prefix auth-service run launch:dev",
     "lint:auth": "npm --prefix auth-service run lint",
     "lint:web-app": "npm --prefix web-app run lint",
+    "ci:build:auth": "bash devops/scripts/build-auth.sh",
     "ci:lint": "run-p lint:auth lint:web-app",
     "ci:test": "npm --prefix web-app run test",
     "ci:install": "npm install && run-p install:auth-service install:web-app"
