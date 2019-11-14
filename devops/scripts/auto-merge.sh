@@ -1,12 +1,3 @@
-export GIT_COMMITTER_EMAIL="travis@travis"
-export GIT_COMMITTER_NAME="Travis CI"
-
-git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* || exit
-
-git fetch --all || exit
-
-git checkout master || exit
-
-git merge --no-ff "$TRAVIS_COMMIT" || exit
-
-git push "https://$GITHUB_SECRET_TOKEN@github.com/AntonKozachko/pdp-2019.git"
+curl -o /tmp/travis-automerge https://raw.githubusercontent.com/cdown/travis-automerge/master/travis-automerge
+chmod a+x /tmp/travis-automerge
+BRANCHES_TO_MERGE_REGEX='^feature/' BRANCH_TO_MERGE_INTO=develop GITHUB_REPO=cdown/srt /tmp/travis-automerge
