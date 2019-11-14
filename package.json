@@ -13,7 +13,7 @@
     "test:web-app": "npm --prefix web-app test",
     "ci:build:auth": "bash devops/scripts/build-auth.sh",
     "ci:lint": " bash devops/scripts/ci-lint.sh",
-    "ci:install": "bash devops/scrits/ci-install.sh",
+    "ci:install": "bash devops/scripts/ci-install.sh",
     "ci:test": "bash devops/scripts/ci-test.sh",
     "ci:automerge": "bash devops/scripts/auto-merge.sh"
   },
