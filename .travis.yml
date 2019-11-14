@@ -4,16 +4,19 @@ node_js:
 
 sudo: required
 
-before_script:
-- npm run ci:preinstall
-
-script:
-- npm run ci:install
-- npm run ci:lint
-- npm run ci:test
+jobs:
+  include:
+    - stage: lint
+      script: npm run ci:lint:web-app
+    - script: npm run ci:lint:auth
+    - stage: test
+      script: npm run ci:test:web-app
 
 env:
   - secure: "dSAavaMRLm6xDZTW5LmTvvZTphPE7ZBYSIIriWUKpgb/6BnPKLfx7ePNiaSuf9pOtHxansJA8ftzCaPfb14Ytlf/487UF2LatC4AeMtiB3MVrA1j0chtV4VKlilW/91GCxO7huOHzBGBSuzhxdERkf2l5GTqMneL3Ob8ijLJs1Cx3T7ku900/T6fk3p1GMYoXj5vmJfa6xqtmKn9zJWkUKBmrlM2yk3PK3hN+JPgiNcdEyaEVkC+aPWXStNP57FbI1RljBrgYxNwFguSG+Kq1JrcZktpljmVg0z2TN2zT6H1X0NAHGxZSoPOtS1ghfA4McQt3HGJJs+3Xmp7Lzt33/3fq2nkj2UqLwC3nLSUYe2DJZs9tXT5cI4pvPpoBGCUa578i2Sg2IG9nyYErVLuMNkm++OsT9YwQ/FqkoiV40SHUIYmh8uVTzhRWVHrH8MvYWCp9e8Wp9U/2l96Jxti4BcHnlMLEpjsHFOgfCB/TfUxJsS2yoflf6wJ8C3JkutqdkJbJhyah6dKWz9K3ybx7Ka/qEQvSdI5Y40jFeD6Ayl84D2YwD0T/5rVhf6QWO9SBLvZriDpSwz3E/zX66xtDIw1auYNBMgx6TbGXSqk38Udz97/ioRc7RN4iY2snZHX6Z/tZE2hbeDbcTXjcNho0kH8D84UwcYAlwSx5hCai7g="
 
 after_success:
+- npm run ci:automerge
+
+before_deploy:
 - npm run ci:build:auth
