@@ -5,6 +5,8 @@ CHANGED_FILES=($(git diff --name-only $TRAVIS_COMMIT_RANGE))
 echo "Changed files:"
 
 declare -a newArray=()
+declare CI_BUILD_AUTH="BUILD"
+declare CO_BUILD_WEB="BUILD"
 
 # iterate over urls and get first level folder
 for folder in "${CHANGED_FILES[@]}"
@@ -26,18 +28,20 @@ do
   if [ $folder == "auth-service" ]
   then
     CI_BUILD_AUTH="BUILD"
-    export CI_BUILD_AUTH
   else
     CI_BUILD_AUTH="SKIP"
-    export CI_BUILD_AUTH
   fi
   # check if changes were in web-app
   if [ $folder == "web-app" ]
   then
     CI_BUILD_WEB="BUILD"
-    export CI_BUILD_WEB
   else
     CI_BUILD_WEB="SKIP"
-    export CI_BUILD_WEB
   fi
 done
+
+echo "AUTH: $CI_BUILD_AUTH"
+echo "WEB-APP: $CI_BUILD_WEB"
+
+export CI_BUILD_AUTH
+export CI_BUILD_WEB
