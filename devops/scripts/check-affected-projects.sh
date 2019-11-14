@@ -2,7 +2,7 @@ echo "Affected projects:"
 
 CHANGED_FILES=($(git diff --name-only $TRAVIS_COMMIT_RANGE))
 
-echo "Changed files:"
+echo "\e[104mChanged files:"
 
 declare -a newArray=()
 
@@ -41,8 +41,8 @@ else
   CI_BUILD_WEB="SKIP"  
 fi
 
-echo "AUTH: ${CI_BUILD_AUTH}"
-echo "WEB: ${CI_BUILD_WEB}"
+echo "\e[92mAUTH: ${CI_BUILD_AUTH}"
+echo "\e[92mWEB: ${CI_BUILD_WEB}"
 
 export CI_BUILD_AUTH
 export CI_BUILD_WEB

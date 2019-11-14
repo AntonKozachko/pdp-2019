@@ -4,24 +4,21 @@
   "description": "nothing to see here yet",
   "main": "index.js",
   "scripts": {
-    "test": "exit 0",
     "install:web-app": "npm --prefix web-app install",
-    "install:auth-service": "bash devops/scripts/install-auth-svc.sh",
+    "install:auth-service": "npm --prefix auth-service install",
     "launch:auth": "npm --prefix auth-service run launch:dev",
+    "launch:web-app": "npm --prefix web-app start",
     "lint:auth": "npm --prefix auth-service run lint",
     "lint:web-app": "npm --prefix web-app run lint",
+    "test:web-app": "npm --prefix web-app test",
     "ci:build:auth": "bash devops/scripts/build-auth.sh",
-    "ci:lint:auth": "bash devops/scripts/lint-auth-svc.sh",
-    "ci:lint:web-app": "bash devops/scripts/lint-web-app.sh",
-    "ci:test:web-app": "bash devops/scripts/test-web-app.sh",
-    "ci:install": "npm install && run-p install:auth-service install:web-app",
+    "ci:lint": " bash devops/scripts/ci-lint.sh",
+    "ci:install": "bash devops/scrits/ci-install.sh",
+    "ci:test": "bash devops/scripts/ci-test.sh",
     "ci:automerge": "bash devops/scripts/auto-merge.sh"
   },
   "author": "Anton Kozachko",
   "license": "MIT",
-  "devDependencies": {
-    "lerna": "^3.4.3"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:AntonKozachko/pdp-2019.git"
