@@ -6,7 +6,7 @@ services:
     - "${WEB_APP_PORT}:${WEB_APP_PORT}"
 
   auth-svc:
-    build: auth-service
+    image: antkozdocker/pdp-auth-svc:latest
     ports:
     - "${AUTH_PORT}:${AUTH_PORT}"
     env_file:

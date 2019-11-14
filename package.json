@@ -13,7 +13,8 @@
     "ci:build:auth": "bash devops/scripts/build-auth.sh",
     "ci:lint": "run-p lint:auth lint:web-app",
     "ci:test": "npm --prefix web-app run test",
-    "ci:install": "npm install && run-p install:auth-service install:web-app"
+    "ci:install": "npm install && run-p install:auth-service install:web-app",
+    "ci:automerge": "bash devops/scripts/auto-merge.sh"
   },
   "author": "Anton Kozachko",
   "license": "MIT",
