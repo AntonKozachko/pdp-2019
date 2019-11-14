@@ -1,4 +1,5 @@
 if [ "$TRAVIS_BRANCH" != "master" ]; then 
+    echo "exiting automerge..."
     exit 0;
 fi
 
