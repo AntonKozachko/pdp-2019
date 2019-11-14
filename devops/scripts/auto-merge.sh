@@ -1,17 +1,8 @@
 export GIT_COMMITTER_EMAIL="travis@travis"
 export GIT_COMMITTER_NAME="Travis CI"
 
-BRANCHES_TO_MERGE_REGEX='^feature/'
 BRANCH_TO_MERGE_INTO="master"
 GITHUB_REPO="AntonKozachko/pdp-2019.git"
-
-if ! grep -q "$BRANCHES_TO_MERGE_REGEX" <<< "$TRAVIS_BRANCH"; then
-    printf "Current branch %s doesn't match regex %s, exiting\\n" \
-        "$TRAVIS_BRANCH" "$BRANCHES_TO_MERGE_REGEX" >&2
-    exit 0
-else
-    printf "Branch passed naming convention!!"
-fi
 
 # Since Travis does a partial checkout, we need to get the whole thing
 repo_temp=$(mktemp -d)
