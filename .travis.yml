@@ -5,7 +5,7 @@ node_js:
 sudo: required
 
 before_script:
-- npm run ci:preinstal
+- npm run ci:preinstall
 
 script:
 - npm run ci:install
