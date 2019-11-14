@@ -6,7 +6,7 @@
   "scripts": {
     "test": "exit 0",
     "install:web-app": "npm --prefix web-app install",
-    "install:auth-service": "npm --prefix auth-service install",
+    "install:auth-service": "bash devops/scripts/install-auth-svc.sh",
     "launch:auth": "npm --prefix auth-service run launch:dev",
     "lint:auth": "npm --prefix auth-service run lint",
     "lint:web-app": "npm --prefix web-app run lint",
