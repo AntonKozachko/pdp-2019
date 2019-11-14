@@ -10,7 +10,7 @@ if ! grep -q "$BRANCHES_TO_MERGE_REGEX" <<< "$TRAVIS_BRANCH"; then
         "$TRAVIS_BRANCH" "$BRANCHES_TO_MERGE_REGEX" >&2
     exit 0
 else
-    printf "Branch passed naming convention"
+    printf "Branch passed naming convention!!"
 fi
 
 # Since Travis does a partial checkout, we need to get the whole thing
