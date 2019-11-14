@@ -1,3 +1,7 @@
+if [ "$TRAVIS_BRANCH" != "master" ]; then 
+    exit 0;
+fi
+
 export GIT_COMMITTER_EMAIL="travis@travis"
 export GIT_COMMITTER_NAME="Travis CI"
 
