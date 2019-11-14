@@ -25,15 +25,19 @@ do
   # check if changes were in auth-service
   if [ $folder == "auth-service" ]
   then
-    export CI_BUILD_AUTH=true
+    CI_BUILD_AUTH="BUILD"
+    export CI_BUILD_AUTH
   else
-    export CI_BUILD_AUTH=false
+    CI_BUILD_AUTH="SKIP"
+    export CI_BUILD_AUTH
   fi
   # check if changes were in web-app
   if [ $folder == "web-app" ]
   then
-    export CI_BUILD_WEB=true
+    CI_BUILD_WEB="BUILD"
+    export CI_BUILD_WEB
   else
-    export CI_BUILD_WEB=false
+    CI_BUILD_WEB="SKIP"
+    export CI_BUILD_WEB
   fi
 done
