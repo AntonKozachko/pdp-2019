@@ -12,8 +12,6 @@ echo "Travis tag: $TRAVIS_TAG"
 echo "Travis test result: $TRAVIS_TEST_RESULT"
 
 exit 0
-
-
 git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* || exit
 
 git fetch --all || exit
