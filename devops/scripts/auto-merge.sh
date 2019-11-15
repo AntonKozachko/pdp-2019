@@ -15,4 +15,4 @@ git checkout master || exit
 
 git merge --no-ff "$TRAVIS_COMMIT" || exit
 
-git push https://"$GIT_COMMITTER_NAME":"$GITHUB_SECRET_TOKEN"@github.com/AntonKozachko/pdp-2019.git"
+git push https://"$GIT_COMMITTER_NAME":"$GITHUB_SECRET_TOKEN"@github.com/AntonKozachko/pdp-2019.git
