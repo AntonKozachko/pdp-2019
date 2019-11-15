@@ -1,8 +1,6 @@
 export GIT_COMMITTER_EMAIL="travis@travis"
 export GIT_COMMITTER_NAME="Travis CI"
 
-echo "$GITHUB_SECRET_TOKEN"
-
 git config --global user.email "$GIT_COMMITTER_EMAIL"
 
 git config --global user.name "$GIT_COMMITTER_NAME"
@@ -15,4 +13,4 @@ git checkout master || exit
 
 git merge --no-ff "$TRAVIS_COMMIT" || exit
 
-git push https://"$GIT_COMMITTER_NAME":"$GITHUB_SECRET_TOKEN"@github.com/AntonKozachko/pdp-2019.git
+git push "https://AntonKozachko:$GITHUB_SECRET_TOKEN@github.com/AntonKozachko/pdp-2019.git"
