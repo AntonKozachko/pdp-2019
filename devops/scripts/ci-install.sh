@@ -1,4 +1,4 @@
-echo "\e[96mInstall auth service"
+echo "$(tput setaf 2)Install auth service$(tput sgr 0)"
 
 curDir=$PWD
 
@@ -8,15 +8,15 @@ if [ "$CI_BUILD_AUTH" == "BUILD" ]; then
   cd $curDir/auth-service
   npm install
 else
-  echo "\e[33mSkip auth install due to absence of changes"
+  echo "$(tput setaf 3)Skip auth install due to absence of changes$(tput sgr 0)"
 fi
 
-echo "\e[96mInstall web-app"
+echo "$(tput setaf 2)Install web-app$(tput sgr 0)"
 
 if [ "$CI_BUILD_WEB" == "BUILD" ]; then
   cd $curDir/web-app
   npm install
 else
-  echo "\e[33mSkip web-app install due to absence of changes"
+  echo "$(tput setaf 3)Skip web-app install due to absence of changes$(tput sgr 0)"
 fi
 
