@@ -3,8 +3,6 @@ source ./devops/scripts/check-affected-projects.sh
 DOCKER_REGISTRY=antkozdocker
 DOCKER_AUTH_REPO=pdp-auth-svc
 
-exit 0
-
 if [ "$CI_BUILD_AUTH" == "BUILD" ]; then
     echo "$(tput setaf 2)Build & Publish for Auth-service started...$(tput sgr 0)"
 
