@@ -4,6 +4,10 @@ node_js:
 
 sudo: required
 
+branches:
+  only:
+    - master
+
 script:
 - npm run ci:install
 - npm run ci:lint

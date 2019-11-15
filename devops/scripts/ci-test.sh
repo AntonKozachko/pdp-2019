@@ -1,4 +1,4 @@
-echo "\e[96mTest web-app"
+echo "$(tput setaf 2)Test web-app$(tput sgr 0)"
 
 curDir=$PWD
 
@@ -8,6 +8,6 @@ if [ "$CI_BUILD_WEB" == "BUILD" ]; then
   cd $curDir/web-app
   npm run test
 else
-  echo "\e[33mSkip web-app test due to absence of changes"
+  echo "$(tput setaf 3)Skip web-app test due to absence of changes$(tput sgr 0)"
   exit 0
 fi
