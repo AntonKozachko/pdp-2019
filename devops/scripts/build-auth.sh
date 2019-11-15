@@ -1,7 +1,6 @@
-echo "Docker registry: $DOCKER_REGISTRY"
-
 source ./devops/scripts/check-affected-projects.sh
 
+DOCKER_REGISTRY=antkozadocker
 DOCKER_AUTH_REPO=pdp-auth-svc
 
 if [ "$CI_BUILD_AUTH" == "BUILD" ]; then
