@@ -1,10 +1,8 @@
-echo "Branch: $TRAVIS_BRANCH"
-echo "Pull request: $TRAVIS_PULL_REQUEST"
-echo "Travis build: $TRAVIS_BUILD_NUMBER"
+echo "Docker registry: $DOCKER_REGISTRY"
 
 source ./devops/scripts/check-affected-projects.sh
 
-DOCKER_AUTH_REPO="pdp-auth-svc"
+DOCKER_AUTH_REPO=pdp-auth-svc
 
 if [ "$CI_BUILD_AUTH" == "BUILD" ]; then
     echo "$(tput setaf 2)Build & Publish for Auth-service started...$(tput sgr 0)"

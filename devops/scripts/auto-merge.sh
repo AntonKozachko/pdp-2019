@@ -9,6 +9,7 @@ echo "Travis job name: $TRAVIS_JOB_NAME"
 echo "Travis pull request: $TRAVIS_PULL_REQUEST"
 echo "Travis pull request branch: $TRAVIS_PULL_REQUEST_BRANCH"
 echo "Travis tag: $TRAVIS_TAG"
+echo "Travis test result: $TRAVIS_TEST_RESULT"
 
 exit 0
 
