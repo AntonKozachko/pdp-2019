@@ -3,7 +3,7 @@ export GIT_COMMITTER_NAME="Travis CI"
 
 git config --global credential.helper cache
 git config --global user.password "$GITHUB_SECRET_TOKEN"
-git config --global user.name "AntonKozachko"
+git config --global user.name "anton_ko@hotmail.com"
 git config --global committer.name "$GIT_COMMITTER_NAME"
 git config --global committer.name "$GIT_COMMITTER_EMAIL"
 
