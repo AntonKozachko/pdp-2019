@@ -1,100 +1,106 @@
-import React, { Fragment, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Icon, Button, Row, Col, Alert } from 'antd';
+import { Form, Icon, Input, Alert, Button } from 'antd';
+import isEmpty from 'lodash/isEmpty';
 
 import { useAuth } from '../AuthProvider/use-auth';
 
-export const Register = ({ onLoginSuccess }) => {
-  const [credentials, setCredentials] = useState({});
-  const [loginError, setLoginError] = useState();
+const Register = ({ onLoginSuccess, form }) => {
   const auth = useAuth();
 
-  const handleUsername = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const username = e.target.value;
-
-    setCredentials({ ...credentials, username });
+    form.validateFields((err, values) => {
+      if (!err) {
+        auth.register(values);
+      }
+    });
   };
 
-  const handlePassword = e => {
-    e.preventDefault();
-    const password = e.target.value;
-
-    setCredentials({ ...credentials, password });
-  };
-
-  const handleName = e => {
-    e.preventDefault();
-    const name = e.target.value;
-
-    setCredentials({ ...credentials, name });
-  };
-
-  const handleRegister = async () => {
-    const { username, password, name } = credentials;
-    try {
-      await auth.register(username, password, name);
-
+  useEffect(() => {
+    if (!isEmpty(auth.user.payload)) {
       onLoginSuccess();
-    } catch (e) {
-      setLoginError(e);
     }
-  };
+  }, [auth.user.payload]);
 
   return (
-    <Fragment>
-      {loginError && (
-        <Row gutter={[20, 20]}>
-          <Col>
-            <Alert message={loginError} type="error" />
-          </Col>
-        </Row>
+    <Form onSubmit={handleSubmit}>
+      {auth.user.error && (
+        <Form.Item>
+          <Alert
+            message="Login error"
+            type="error"
+            description={auth.user.error}
+          />
+        </Form.Item>
       )}
-
-      <Row gutter={[20, 20]}>
-        <Col>
+      <Form.Item>
+        {form.getFieldDecorator('username', {
+          rules: [{ required: true, message: 'Please input your username!' }],
+        })(
           <Input
-            placeholder="Enter your username"
-            onChange={handleUsername}
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          />
-        </Col>
-      </Row>
-      <Row gutter={[20, 20]}>
-        <Col>
+            placeholder="Username"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        {form.getFieldDecorator('password', {
+          rules: [
+            { required: true, message: 'Please input your Password!' },
+            { min: 4, message: 'Password should not be less then 4 symbols' },
+            { max: 15, message: 'Password max symbols is 15' },
+          ],
+        })(
           <Input
-            placeholder="Enter your password"
-            onChange={handlePassword}
-            type="password"
             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          />
-        </Col>
-      </Row>
-      <Row gutter={[20, 20]}>
-        <Col>
+            type="password"
+            placeholder="Password"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        {form.getFieldDecorator('firstname', {
+          rules: [{ required: true, message: 'Please input your first name!' }],
+        })(
           <Input
-            placeholder="Enter your name"
-            onChange={handleName}
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          />
-        </Col>
-      </Row>
-      <Row gutter={[20, 20]}>
-        <Col>
-          <Button
-            block
-            type="primary"
-            onClick={handleRegister}
-            loading={auth.user.loading}
-          >
-            Register
-          </Button>
-        </Col>
-      </Row>
-    </Fragment>
+            placeholder="Firstname"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        {form.getFieldDecorator('lastname')(
+          <Input
+            prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder="Lastname"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        {form.getFieldDecorator('avatar', {
+          rules: [{ type: 'url', message: 'Should be url-link to avatar' }],
+        })(
+          <Input
+            prefix={
+              <Icon type="file-image" style={{ color: 'rgba(0,0,0,.25)' }} />
+            }
+            placeholder="Avatar link"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" block>
+          Register
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
+export const RegisterForm = Form.create({ name: 'register_form' })(Register);
+
 Register.propTypes = {
   onLoginSuccess: PropTypes.func,
+  form: PropTypes.object.isRequired,
 };

@@ -1,31 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> should render and match the snapshot 1`] = `
-<div>
-  <AuthProvider>
-    <Adapter>
-      <Adapter
-        style={
-          Object {
-            "backgroundColor": "none",
-          }
+<AuthProvider>
+  <Adapter>
+    <Adapter
+      style={
+        Object {
+          "backgroundColor": "none",
         }
-      >
-        <Header />
-      </Adapter>
-      <Adapter>
-        <Switch>
-          <Route
-            component={[Function]}
-            exact={true}
-            path="/"
-          />
-          <Route
-            component={[Function]}
-          />
-        </Switch>
-      </Adapter>
+      }
+    >
+      <Header />
     </Adapter>
-  </AuthProvider>
-</div>
+    <Adapter>
+      <Switch>
+        <Route
+          component={[Function]}
+          exact={true}
+          path="/"
+        />
+        <Route
+          component={[Function]}
+        />
+      </Switch>
+    </Adapter>
+    <Adapter
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      Created with Ant UED
+    </Adapter>
+  </Adapter>
+</AuthProvider>
 `;

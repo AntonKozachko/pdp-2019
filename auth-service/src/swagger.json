@@ -196,7 +196,7 @@
         "password"
       ],
       "properties": {
-        "id": {
+        "_id": {
           "type": "string",
           "uniqueItems": true
         },
@@ -207,24 +207,22 @@
         "password": {
           "type": "string"
         },
-        "name": {
+        "avatar": {
           "type": "string"
         },
-        "level": {
+        "firstname": {
           "type": "string"
         },
-        "votes": {
-          "type": "number"
-        },
-        "age": {
-          "type": "number"
+        "lastname": {
+          "type": "string"
         }
       }
     },
     "NewUser": {
       "required": [
         "username",
-        "password"
+        "password",
+        "firstname"
       ],
       "properties": {
         "username": {
@@ -234,17 +232,14 @@
         "password": {
           "type": "string"
         },
-        "name": {
+        "avatar": {
           "type": "string"
         },
-        "level": {
+        "firstname": {
           "type": "string"
         },
-        "votes": {
-          "type": "number"
-        },
-        "age": {
-          "type": "number"
+        "lastname": {
+          "type": "string"
         }
       }
     },
@@ -255,17 +250,11 @@
     "UpdateUser": {
       "type": "object",
       "properties": {
-        "name": {
+        "firstname": {
           "type": "string"
         },
-        "level": {
+        "lastname": {
           "type": "string"
-        },
-        "votes": {
-          "type": "number"
-        },
-        "age": {
-          "type": "number"
         }
       }
     },
