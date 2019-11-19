@@ -31,11 +31,17 @@ const postSchema = new Schema({
     default: new Date().toISOString(),
   },
   likes: {
-    count: Number,
-    voters: [Schema.Types.ObjectID],
+    count: {
+      type: Number,
+      default: 0,
+    },
+    voters: {
+      type: [String],
+      default: [],
+    },
   },
   author: {
-    type: Schema.Types.ObjectID,
+    type: String,
     required: true,
   },
 });

@@ -24,7 +24,11 @@ router.post('/authenticate', (req, res, next) => authenticateHandler.execute(req
 router.post('/verify', (req, res, next) => verifyTokenHandler.execute(req, res, next));
 router.get('/all', parseToken, (req, res, next) => getUsersHandler.execute(req, res, next));
 router.put('/', parseToken, (req, res, next) => updateHandler.execute(req, res, next));
-router.post('/', (req, res, next) => registerHandler.execute(req, res, next));
+router.post(
+  '/',
+  (req, res, next) => registerHandler.execute(req, res, next),
+  (req, res, next) => authenticateHandler.execute(req, res, next),
+);
 router.delete('/', parseToken, (req, res, next) => deleteHandler.execute(req, res, next));
 
 export const userRouter = router;

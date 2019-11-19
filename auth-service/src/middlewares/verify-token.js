@@ -30,7 +30,7 @@ export function parseToken (req, res, next) {
       return next();
     }
     log.info(`Request from userId=${decoded.sub}`);
-    req.userId = decoded.sub;
+    req.userId = decoded.sub.id;
 
     return next();
   });

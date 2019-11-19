@@ -11,8 +11,8 @@ export class RegisterHandler extends BaseController {
     const NewUser = new User(body);
 
     try {
-      const user = await NewUser.save();
-      return this.success(user);
+      await NewUser.save();
+      this.next();
     } catch (err) {
       log.error(err);
       return this.mongoError(err);

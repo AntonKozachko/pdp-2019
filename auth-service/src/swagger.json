@@ -145,6 +145,9 @@
               "properties": {
                 "userId": {
                   "type": "string"
+                },
+                "person": {
+                  "type": "string"
                 }
               }
             }
