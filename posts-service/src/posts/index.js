@@ -1,6 +1,5 @@
 import express from 'express';
 
-import { verifyUser } from '../middlewares/verify-user';
 import { GestPostsHandler } from './handlers';
 
 const router = express.Router();

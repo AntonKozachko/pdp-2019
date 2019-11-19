@@ -5,7 +5,7 @@ import logger from '../../libs/logger';
 const log = logger.get('Get_Posts_Handler');
 
 export class GestPostsHandler extends BaseController {
-  async executeImpl() {
+  async executeImpl () {
     try {
       const posts = await Posts.find({});
 
