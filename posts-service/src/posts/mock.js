@@ -1,4 +1,5 @@
 import faker from 'faker';
+import { mongo } from 'mongoose';
 
 export const posts = Array(20).fill({}).map(() => ({
   _id: mongo.ObjectID(),
