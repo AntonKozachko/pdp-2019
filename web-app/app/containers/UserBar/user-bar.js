@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Button, Dropdown, Menu, Icon, Avatar } from 'antd';
+import isEmpty from 'lodash/isEmpty';
 
-import { Login } from '../Auth/login';
-import { Register } from '../Auth/register';
+import { LoginForm } from '../Auth/login';
+import { RegisterForm } from '../Auth/register';
 import { useAuth } from '../AuthProvider/use-auth';
 import { modalTypes } from './constants/modal-types';
 
@@ -38,12 +39,16 @@ export const UserBar = () => {
   );
 
   return (
-    <div>
+    <div className="user">
       {auth.user.payload ? (
         <div className="user-info">
-          <Avatar>{auth.user.payload.name}</Avatar>
+          <Avatar src={auth.user.payload.avatar}>
+            {isEmpty(auth.user.payload.avatar) && auth.user.payload.firstname}
+          </Avatar>
           <Dropdown overlay={renderUserMenu()}>
-            <b>{auth.user.payload.name}</b>
+            <div className="user-info__firstname">
+              {auth.user.payload.firstname}
+            </div>
           </Dropdown>
         </div>
       ) : (
@@ -67,9 +72,9 @@ export const UserBar = () => {
         centered
       >
         {modal.type === modalTypes.login ? (
-          <Login onLoginSuccess={closeLoginModal} />
+          <LoginForm onLoginSuccess={closeLoginModal} />
         ) : (
-          <Register onLoginSuccess={closeLoginModal} />
+          <RegisterForm onLoginSuccess={closeLoginModal} />
         )}
       </Modal>
     </div>

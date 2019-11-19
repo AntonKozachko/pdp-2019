@@ -4,9 +4,11 @@ services:
     build: web-app
     ports:
     - "${WEB_APP_PORT}:${WEB_APP_PORT}"
+    env_file:
+    - ./devops/config/normal-dev.env
 
   auth-svc:
-    image: antkozdocker/pdp-auth-svc:latest
+    build: auth-service
     ports:
     - "${AUTH_PORT}:${AUTH_PORT}"
     env_file:

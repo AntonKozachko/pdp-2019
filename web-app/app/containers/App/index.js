@@ -9,20 +9,21 @@ import Header from '../Header';
 
 export default function App() {
   return (
-    <div>
-      <AuthProvider>
-        <Layout>
-          <Layout.Header style={{ backgroundColor: 'none' }}>
-            <Header />
-          </Layout.Header>
-          <Layout.Content>
-            <Switch>
-              <Route exact path="/" component={HomePage} />
-              <Route component={NotFoundPage} />
-            </Switch>
-          </Layout.Content>
-        </Layout>
-      </AuthProvider>
-    </div>
+    <AuthProvider>
+      <Layout>
+        <Layout.Header style={{ backgroundColor: 'none' }}>
+          <Header />
+        </Layout.Header>
+        <Layout.Content>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route component={NotFoundPage} />
+          </Switch>
+        </Layout.Content>
+        <Layout.Footer style={{ textAlign: 'center' }}>
+          Created with Ant UED
+        </Layout.Footer>
+      </Layout>
+    </AuthProvider>
   );
 }

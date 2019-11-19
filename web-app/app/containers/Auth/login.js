@@ -1,84 +1,75 @@
-import React, { Fragment, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Input, Icon, Button, Row, Col, Alert } from 'antd';
+import { Form, Icon, Input, Alert, Button } from 'antd';
+import isEmpty from 'lodash/isEmpty';
 
 import { useAuth } from '../AuthProvider/use-auth';
 
-export const Login = ({ onLoginSuccess }) => {
-  const [credentials, setCredentials] = useState({});
-  const [loginError, setLoginError] = useState();
+const Login = ({ onLoginSuccess, form }) => {
   const auth = useAuth();
 
-  const handleUsername = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const username = e.target.value;
-
-    setCredentials({ ...credentials, username });
+    form.validateFields((err, values) => {
+      if (!err) {
+        auth.login(values);
+      }
+    });
   };
 
-  const handlePassword = e => {
-    e.preventDefault();
-    const password = e.target.value;
-
-    setCredentials({ ...credentials, password });
-  };
-
-  const handleUser = async () => {
-    const { username, password } = credentials;
-    try {
-      await auth.login(username, password);
-
+  useEffect(() => {
+    if (!isEmpty(auth.user.payload)) {
       onLoginSuccess();
-    } catch (e) {
-      setLoginError(e);
     }
-  };
+  }, [auth.user.payload]);
+
+  const { getFieldDecorator } = form;
+  const { error: userError } = auth.user;
 
   return (
-    <Fragment>
-      {loginError && (
-        <Row gutter={[20, 20]}>
-          <Col>
-            <Alert message={loginError} type="error" />
-          </Col>
-        </Row>
+    <Form onSubmit={handleSubmit}>
+      {userError && (
+        <Form.Item>
+          <Alert message="Login error" type="error" description={userError} />
+        </Form.Item>
       )}
-
-      <Row gutter={[20, 20]}>
-        <Col>
+      <Form.Item>
+        {getFieldDecorator('username', {
+          rules: [{ required: true, message: 'Please input your username!' }],
+        })(
           <Input
-            placeholder="Enter your username"
-            onChange={handleUsername}
             prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          />
-        </Col>
-      </Row>
-      <Row gutter={[20, 20]}>
-        <Col>
+            placeholder="Username"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        {getFieldDecorator('password', {
+          rules: [
+            { required: true, message: 'Please input your Password!' },
+            { min: 4, message: 'Password should not be less then 4 symbols' },
+            { max: 15, message: 'Password max symbols is 15' },
+          ],
+        })(
           <Input
-            placeholder="Enter your password"
-            onChange={handlePassword}
-            type="password"
             prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          />
-        </Col>
-      </Row>
-      <Row gutter={[20, 20]}>
-        <Col>
-          <Button
-            block
-            type="primary"
-            onClick={handleUser}
-            loading={auth.user.loading}
-          >
-            Login
-          </Button>
-        </Col>
-      </Row>
-    </Fragment>
+            type="password"
+            placeholder="Password"
+          />,
+        )}
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" htmlType="submit" block>
+          Log in
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
+export const LoginForm = Form.create({ name: 'login_form' })(Login);
+
 Login.propTypes = {
   onLoginSuccess: PropTypes.func,
+  form: PropTypes.object.isRequired,
 };

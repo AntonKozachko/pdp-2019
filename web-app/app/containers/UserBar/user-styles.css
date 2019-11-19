@@ -1,7 +1,19 @@
+.user {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+}
+
 .user-info {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
+  color: white;
+}
+
+.user-info__firstname {
+  margin-left: 16px;
+  font-weight: 600;
 }
 
 .auth-actions > button {

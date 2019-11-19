@@ -91,6 +91,8 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
+      AUTH_PORT: process.env.AUTH_PORT || 9000,
+      AUTH_HOST: process.env.AUTH_HOST || 'localhost',
     }),
   ]),
   resolve: {

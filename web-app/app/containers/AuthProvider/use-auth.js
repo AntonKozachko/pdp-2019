@@ -21,20 +21,20 @@ export const useAuth = () => useContext(authContext);
 function useProvideAuth() {
   const [user, dispatch] = useReducer(responseReducer, initialAuthState);
 
+  const authHost = process.env.AUTH_HOST;
+  const authPort = process.env.AUTH_PORT;
+
   const authInstance = axios.create({
-    baseURL: 'http://localhost:9000/user',
-    timeout: 1000,
+    baseURL: `http://${authHost}:${authPort}/user`,
+    timeout: 2000,
   });
 
-  const login = async (username, password) => {
+  const login = async credentials => {
     dispatch({ type: actions.request });
     let apiResponse;
 
     try {
-      apiResponse = await authInstance.post('/authenticate', {
-        username,
-        password,
-      });
+      apiResponse = await authInstance.post('/authenticate', credentials);
       const { data } = apiResponse;
       dispatch({ type: actions.success, payload: data });
     } catch (err) {
@@ -46,12 +46,12 @@ function useProvideAuth() {
     return apiResponse;
   };
 
-  const register = async (username, password, name) => {
+  const register = async userData => {
     dispatch({ type: actions.request });
     let apiResponse;
 
     try {
-      apiResponse = await authInstance.post('', { username, password, name });
+      apiResponse = await authInstance.post('', userData);
       const { data } = apiResponse;
       dispatch({ type: actions.success, payload: data });
     } catch (err) {
