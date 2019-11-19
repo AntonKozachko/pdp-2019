@@ -20,3 +20,12 @@ else
   echo "$(tput setaf 3)Skip web-app install due to absence of changes$(tput sgr 0)"
 fi
 
+echo "$(tput setaf 2)Install posts service$(tput sgr 0)"
+
+if [ "$CI_BUILD_POSTS" == "BUILD" ]; then
+  cd $curDir/posts-service
+  npm install
+else
+  echo "$(tput setaf 3)Skip posts service install due to absence of changes$(tput sgr 0)"
+fi
+
