@@ -2,7 +2,7 @@ echo "Affected projects:"
 
 CHANGED_FILES=($(git diff --name-only $TRAVIS_COMMIT_RANGE))
 
-echo "\e[104mChanged files:"
+echo "$(tput setaf 2)Changed files:(tput sgr 0)"
 
 declare -a newArray=()
 
@@ -41,8 +41,17 @@ else
   CI_BUILD_WEB="SKIP"  
 fi
 
-echo "\e[92mAUTH: ${CI_BUILD_AUTH}"
-echo "\e[92mWEB: ${CI_BUILD_WEB}"
+containsElement "posts-service" "${affectedProjects[@]}"
+if [ $? == 1 ]; then
+  CI_BUILD_POSTS="BUILD"
+else
+  CI_BUILD_POSTS="SKIP"  
+fi
+
+echo "$(tput setaf 2)AUTH: ${CI_BUILD_AUTH}(tput sgr 0)"
+echo "$(tput setaf 2)WEB: ${CI_BUILD_WEB}(tput sgr 0)"
+echo "$(tput setaf 2)POSTS: ${CI_BUILD_POSTS}(tput sgr 0)"
 
 export CI_BUILD_AUTH
 export CI_BUILD_WEB
+export CI_BUILD_POSTS

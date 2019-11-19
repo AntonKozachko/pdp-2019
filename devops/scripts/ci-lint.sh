@@ -19,3 +19,12 @@ if [ "$CI_BUILD_WEB" == "BUILD" ]; then
 else
   echo "$(tput setaf 3)Skip web-app lint due to absence of changes$(tput sgr 0)"
 fi
+
+echo "$(tput setaf 2)Lint posts service$(tput sgr 0)"
+
+if [ "$CI_BUILD_POSTS" == "BUILD" ]; then
+  cd $curDir/posts-service
+  npm run lint
+else
+  echo "$(tput setaf 3)Skip posts service lint due to absence of changes$(tput sgr 0)"
+fi

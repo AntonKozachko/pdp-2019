@@ -16,6 +16,15 @@ services:
     depends_on:
     - mongo
 
+  posts-svc:
+    build: posts-service
+    ports:
+    - "${POSTS_PORT}:${POSTS_PORT}"
+    env_file:
+    - ./devops/config/normal-dev.env
+    depends_on:
+    - mongo
+
   mongo:
     image: mongo
     ports:
