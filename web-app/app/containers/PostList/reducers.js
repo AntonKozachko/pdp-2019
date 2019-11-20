@@ -1,4 +1,4 @@
-export const initialAuthState = { payload: null, error: null, loading: false };
+export const initialState = { payload: [], error: null, loading: false };
 
 export const actions = {
   request: 'request',
@@ -15,6 +15,6 @@ export function responseReducer(state, action) {
     case actions.fail:
       return { ...state, error: action.payload, loading: false };
     default:
-      return initialAuthState;
+      return initialState;
   }
 }

@@ -93,6 +93,8 @@ module.exports = options => ({
       NODE_ENV: 'development',
       AUTH_PORT: process.env.AUTH_PORT || 9000,
       AUTH_HOST: process.env.AUTH_HOST || 'localhost',
+      POSTS_PORT: process.env.POSTS_PORT || 9010,
+      POSTS_HOST: process.env.POSTS_PORT || 'localhost',
     }),
   ]),
   resolve: {
