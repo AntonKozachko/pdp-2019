@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useReducer, createContext } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import get from 'lodash/get';
-import isEmpty from 'lodash/isEmpty';
 
 import { responseReducer, initialAuthState, actions } from './reducers';
 import { useLocalStorage } from '../../utils/local-storage/useLocalStorage';
@@ -82,16 +81,16 @@ function useProvideAuth() {
     } catch (err) {
       removeAuthToken();
     }
-  }
+  };
 
   const removeAuthToken = () => {
-    delete authInstance.defaults.headers.common["Authorization"];
+    delete authInstance.defaults.headers.common.Authorization;
     localStorageToken.removeValue();
-  }
+  };
 
   const setAuthHeader = token => {
     authInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  }
+  };
 
   useEffect(() => {
     const authToken = get(user, 'payload.authToken');
@@ -107,7 +106,6 @@ function useProvideAuth() {
 
     if (authToken) {
       setAuthHeader(authToken);
-      
       verify();
     }
   }, []);

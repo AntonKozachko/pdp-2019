@@ -13,7 +13,6 @@ export function useLocalStorage(key, initialValue) {
 
   const setValue = value => {
     try {
-      // Allow value to be a function so we have same API as useState
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
 
@@ -31,7 +30,7 @@ export function useLocalStorage(key, initialValue) {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return {
     value: storedValue,
