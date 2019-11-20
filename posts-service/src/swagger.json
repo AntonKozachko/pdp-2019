@@ -82,10 +82,7 @@
           }
         },
         "author": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "type": "string"
         }
       }
     },

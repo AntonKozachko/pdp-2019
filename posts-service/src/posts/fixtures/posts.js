@@ -12,7 +12,10 @@ const posts = Array(20).fill({}).map(() => ({
     count: 5,
     voters: Array(5).fill('').map(() => mongo.ObjectID()),
   },
-  author: mongo.ObjectID(),
+  author: {
+    id: mongo.ObjectID(),
+    name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+  },
 }));
 
 module.exports = posts;

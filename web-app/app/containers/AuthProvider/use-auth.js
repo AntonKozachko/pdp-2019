@@ -4,6 +4,7 @@ import axios from 'axios';
 import get from 'lodash/get';
 
 import { responseReducer, initialAuthState, actions } from './reducers';
+import { useLocalStorage } from '../../utils/local-storage/useLocalStorage';
 
 const authContext = createContext();
 
@@ -20,6 +21,7 @@ export const useAuth = () => useContext(authContext);
 
 function useProvideAuth() {
   const [user, dispatch] = useReducer(responseReducer, initialAuthState);
+  const localStorageToken = useLocalStorage('authToken');
 
   const authHost = process.env.AUTH_HOST;
   const authPort = process.env.AUTH_PORT;
@@ -63,17 +65,50 @@ function useProvideAuth() {
     return apiResponse;
   };
 
+  // todo: add interceptor to handle expired token and logout
   const logout = () => {
     dispatch({ type: actions.success, payload: null });
+
+    removeAuthToken();
+  };
+
+  const verify = async () => {
+    try {
+      const apiResponse = await authInstance.post('/verify');
+      const { data } = apiResponse;
+
+      dispatch({ type: actions.success, payload: data });
+    } catch (err) {
+      removeAuthToken();
+    }
+  };
+
+  const removeAuthToken = () => {
+    delete authInstance.defaults.headers.common.Authorization;
+    localStorageToken.removeValue();
+  };
+
+  const setAuthHeader = token => {
+    authInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
   };
 
   useEffect(() => {
-    if (user && user.authToken) {
-      authInstance.defaults.headers.common.Authorization = `Bearer ${
-        user.authToken
-      }`;
+    const authToken = get(user, 'payload.authToken');
+
+    if (authToken) {
+      localStorageToken.setValue(authToken);
+      setAuthHeader(authToken);
     }
-  });
+  }, [user]);
+
+  useEffect(() => {
+    const { value: authToken } = localStorageToken;
+
+    if (authToken) {
+      setAuthHeader(authToken);
+      verify();
+    }
+  }, []);
 
   return {
     user,

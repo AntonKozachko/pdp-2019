@@ -32,7 +32,8 @@ export class VerifyTokenHandler extends BaseController {
         log.error(err);
         return this.jwtError(err);
       }
-      return this.success({ userId: decoded.sub });
+
+      return this.success(decoded.sub);
     });
   }
 }
