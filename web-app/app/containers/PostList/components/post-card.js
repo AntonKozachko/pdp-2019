@@ -21,7 +21,7 @@ PostCard.propTypes = {
     created: PropTypes.string,
     likes: PropTypes.shape({
       count: PropTypes.number,
-      voters: PropTypes.arrayOf(PropTypes.string),
+      voted: PropTypes.bool,
     }),
   }),
   loading: PropTypes.bool,
@@ -33,18 +33,15 @@ PostCard.defaultProps = {
 
 export function PostCard({ post, loading }) {
   const { description, title, postCover, created, likes, author } = post;
-  const auth = useAuth();
 
   const getCover = () => <img alt="post_cover" src={postCover} />;
 
   const likeButton = () => {
-    const userId = get(auth, 'user.payload.id');
-    const isLiked = likes.voters.includes(userId);
-
-    const theme = isLiked ? 'filled' : 'outlined';
-    const tooltipTitle = isLiked
-      ? `You and ${likes.count - 1} other`
-      : `Liked by ${likes.count} users`;
+    const { voted, count } = likes;
+    const theme = voted ? 'filled' : 'outlined';
+    const tooltipTitle = voted
+      ? `You and ${count - 1} other`
+      : `Liked by ${count} users`;
 
     return (
       <Tooltip title={tooltipTitle}>

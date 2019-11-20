@@ -1,6 +1,7 @@
 import { BaseController } from '../../helpers/base-controller';
 import { Posts } from '../models/post.model';
 import logger from '../../libs/logger';
+import { PostMapper } from '../data-mappers/post-mapper';
 
 const log = logger.get('Create_Post_Handler');
 
@@ -13,8 +14,8 @@ export class CreatePostHandler extends BaseController {
     }
 
     try {
-      const author = this.createAuthor(user);
-      const NewPost = new Posts({ ...body, author });
+      const model = PostMapper.toPostPersistance(body, user);
+      const NewPost = new Posts(model);
 
       await NewPost.save();
 
@@ -23,13 +24,5 @@ export class CreatePostHandler extends BaseController {
       log.error(err);
       return this.mongoError(err);
     }
-  }
-
-  createAuthor(user) {
-    const { id, firstname, lastname } = user;
-    log.info(user);
-    const name = `${firstname} ${lastname}`.trim();
-
-    return { id, name };
   }
 }

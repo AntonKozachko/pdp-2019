@@ -4,7 +4,7 @@ import { Layout } from 'antd';
 
 import HomePage from '../HomePage/Loadable';
 import NotFoundPage from '../NotFoundPage/Loadable';
-import { CreatePost } from '../CreatePost';
+import { CreatePostForm } from '../CreatePost';
 import { AuthProvider } from '../AuthProvider/use-auth';
 import Header from '../Header';
 
@@ -18,7 +18,7 @@ export default function App() {
         <Layout.Content>
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/create-post" component={CreatePost} />
+            <Route exact path="/create-post" component={CreatePostForm} />
             <Route component={NotFoundPage} />
           </Switch>
         </Layout.Content>

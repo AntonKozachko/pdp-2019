@@ -41,6 +41,11 @@
           "Posts"
         ],
         "summary": "Get all posts in system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -81,7 +86,7 @@
   "definitions": {
     "Posts": {
       "properties": {
-        "_id": {
+        "id": {
           "type": "string",
           "uniqueItems": true
         },
@@ -117,9 +122,8 @@
         "count": {
           "type": "number"
         },
-        "voters": {
-          "type": "array",
-          "items": "string"
+        "voted": {
+          "type": "boolean"
         }
       }
     },

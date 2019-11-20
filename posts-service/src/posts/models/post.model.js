@@ -21,7 +21,6 @@ const postSchema = new Schema({
   },
   postCover: {
     type: String,
-    default: faker.image.image(),
     validate: [imageUrlValidator, 'invalid image url format'],
   },
   description: {
@@ -34,10 +33,6 @@ const postSchema = new Schema({
     default: new Date().toISOString(),
   },
   likes: {
-    count: {
-      type: Number,
-      default: 0,
-    },
     voters: {
       type: [String],
       default: [],

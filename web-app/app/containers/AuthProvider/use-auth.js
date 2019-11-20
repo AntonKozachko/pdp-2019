@@ -85,11 +85,14 @@ function useProvideAuth() {
 
   const removeAuthToken = () => {
     delete authInstance.defaults.headers.common.Authorization;
+    delete axios.defaults.headers.common.Authorization;
+
     localStorageToken.removeValue();
   };
 
   const setAuthHeader = token => {
     authInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   };
 
   useEffect(() => {
