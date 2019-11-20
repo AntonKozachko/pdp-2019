@@ -41,8 +41,14 @@ const postSchema = new Schema({
     },
   },
   author: {
-    type: String,
-    required: true,
+    id: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
   },
 });
 
