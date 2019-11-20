@@ -1,12 +1,11 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
-import messages from './messages';
+import { PostList } from '../PostList';
 
 export default function HomePage() {
   return (
     <div>
-      <FormattedMessage {...messages.header} />
+      <PostList />
     </div>
   );
 }
