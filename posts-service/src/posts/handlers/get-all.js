@@ -7,7 +7,7 @@ const log = logger.get('Get_Posts_Handler');
 export class GestPostsHandler extends BaseController {
   async executeImpl () {
     try {
-      const posts = await Posts.find({});
+      const posts = await Posts.find({}, null, { sort: { created: 'desc' }});
 
       return this.success(posts);
     } catch (err) {

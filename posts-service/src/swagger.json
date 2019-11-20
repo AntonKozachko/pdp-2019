@@ -49,6 +49,32 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Posts"
+        ],
+        "summary": "Create new post in system",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/definitions/NewPost"
+              },
+              "required": true
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          }
+        }
       }
     }
   },
@@ -94,6 +120,27 @@
         "voters": {
           "type": "array",
           "items": "string"
+        }
+      }
+    },
+    "NewPost": {
+      "required": [
+        "title",
+        "article",
+        "description"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "article": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "postCover": {
+          "type": "string"
         }
       }
     }

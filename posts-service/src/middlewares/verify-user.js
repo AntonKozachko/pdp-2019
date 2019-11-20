@@ -1,12 +1,30 @@
+import axios from 'axios';
+import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
+
 import logger from '../libs/logger';
 
 const log = logger.get('Verify_User_Middleware');
 
-export function verifyUser (req, res, next) {
-  const { headers: { authorization = '' } } = req;
+export async function verifyUser (req, res, next) {
+  const { authorization = '' } = req.headers;
 
-  log.info(`User token: ${authorization}`);
+  const verifyUrl = `http://${process.env.AUTH_HOST}:${process.env.AUTH_PORT}/user/verify`;
 
-  // todo: call to auth service to verify token
+  log.info(`Verify User token: ${req.headers.authorization}`);
+
+  try {
+    const { data: user } = await axios.post(verifyUrl, null, {
+      headers: { 'Authorization': authorization },
+    });
+
+    if(!isEmpty(user)) {
+      req.user = user;
+    }
+  } catch (err) {
+    const errMsg = get(err, 'response.data.message', err);
+    log.error(errMsg);
+  }
+
   next();
 }
