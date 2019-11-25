@@ -1,2 +1,2 @@
-export { GestPostsHandler } from './get-all';
+export { GetPostsHandler } from './get-all';
 export { CreatePostHandler } from './create';

@@ -4,7 +4,7 @@ import logger from '../../libs/logger';
 
 const log = logger.get('Posts_Mapper');
 
-export class PostMapper {
+export class PostsMapper {
   static toPostDto(post = {}, user = {}) {
     const likes = get(post, 'likes', []);
     const likesCount = likes.length;

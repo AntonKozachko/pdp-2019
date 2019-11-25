@@ -1,11 +1,14 @@
 import { BaseController } from '../../helpers/base-controller';
-import { Posts } from '../models/post.model';
 import logger from '../../libs/logger';
-import { PostMapper } from '../data-mappers/post-mapper';
 
 const log = logger.get('Create_Post_Handler');
 
 export class CreatePostHandler extends BaseController {
+  constructor(repo) {
+    super();
+    this.postsRepo = repo;
+  }
+
   async executeImpl () {
     const { user, body } = this.req;
 
@@ -14,11 +17,7 @@ export class CreatePostHandler extends BaseController {
     }
 
     try {
-      const model = PostMapper.toPostPersistance(body, user);
-      const NewPost = new Posts(model);
-
-      await NewPost.save();
-
+      await this.postsRepo.save(body, user);
       return this.created();
     } catch (err) {
       log.error(err);
