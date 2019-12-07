@@ -1,6 +1,10 @@
 import { PostsMapper } from './posts-mapper';
 import get from 'lodash/get';
 
+import logger from '../../libs/logger';
+
+const log = logger.get('Posts_Repo');
+
 export class PostsRepository {
   constructor(models) {
     this.models = models;
@@ -52,12 +56,34 @@ export class PostsRepository {
   async findPostById(id) {
     const PostsModel = this.models.Posts;
 
-    const post = await PostsModel.findOne({
-      where: { _id: id },
-    });
+    let result;
 
-    return post;
+    try {
+      result = await PostsModel.findOne({
+        where: { _id: id },
+      });
+    } catch (e) {
+      result = Error(e);
+    }
+
+    return result;
   }
 
-  async createPost()
+  async create() {}
+
+  async getAll(user) {
+    const PostsModel = this.models.Posts;
+
+    let result;
+
+    try {
+      const posts = await PostsModel.find({}, null, { sort: { created: 'desc' }});
+      result = posts.map(post => PostsMapper.toPostDto(post.toObject(), user));
+
+    } catch (e) {
+      result = Error(e);
+    }
+
+    return result;
+  }
 }

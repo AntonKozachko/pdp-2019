@@ -14,7 +14,7 @@ router.use(verifyUser);
 const PostsRepo = new PostsRepository({ Posts });
 
 // routes
-router.get('', (req, res, next) => new GetPostsHandler().execute(req, res, next));
+router.get('', (req, res, next) => new GetPostsHandler(PostsRepo).execute(req, res, next));
 router.post('', (req, res, next) => new CreatePostHandler(PostsRepo).execute(req, res, next));
 
 export const postsRouter = router;

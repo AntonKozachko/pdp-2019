@@ -17,8 +17,6 @@ export class PostsMapper {
       article, author, postCover = null, created,
     } = post;
 
-    log.info(`Likes count: ${JSON.stringify(likes)}`);
-
     return {
       id: _id,
       title, description, article,
