@@ -33,10 +33,8 @@ const postSchema = new Schema({
     default: new Date().toISOString(),
   },
   likes: {
-    voters: {
-      type: [String],
-      default: [],
-    },
+    type: [String],
+    default: [],
   },
   author: {
     id: {

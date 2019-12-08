@@ -15,7 +15,6 @@ export class GetPostsHandler extends BaseController {
 
       const dto = await this.postsRepo.getAll(user);
 
-
       return this.success(dto);
     } catch (err) {
       log.error(err);

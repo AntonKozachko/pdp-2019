@@ -20,30 +20,31 @@ export class PostsRepository {
     return !!result;
   }
 
-  async delete(document) {
+  async delete(document, user) {
     const PostsModel = this.models.Posts;
 
     return await PostsModel.deleteOne({
-      where: { _id: document.id },
+      where: { _id: document.id, author: { id: user.id }},
     });
   }
 
   async save(document, user) {
     const PostsModel = this.models.Posts;
 
-    const documentId = get (document, 'id', '');
+    const documentId = get(document, 'id', '');
     const isExist = await this.exists(documentId);
 
     const rawData = PostsMapper.toPostPersistence(document, user);
 
     if (isExist) {
       const dbDoc = await PostsModel.findOne({
-        where: { _id: documentId },
+        _id: documentId,
       });
 
       try {
         await dbDoc.update(rawData);
       } catch (e) {
+        log.error(e);
         return Error(e);
       }
     } else {
@@ -53,6 +54,26 @@ export class PostsRepository {
     return document;
   }
 
+  async likePost(id, user) {
+    const post = await this.findPostById(id);
+
+    const isAlreadyLiked = post.likes.some(likeId => likeId === user.id);
+
+    let result;
+
+    if (isAlreadyLiked) {
+      result = await post.update(
+        { $pull: { likes: user.id } },
+      );
+    } else {
+      result = await post.update(
+        { $push: { likes: user.id } },
+      );
+    }
+
+    return result;
+  }
+
   async findPostById(id) {
     const PostsModel = this.models.Posts;
 
@@ -60,16 +81,15 @@ export class PostsRepository {
 
     try {
       result = await PostsModel.findOne({
-        where: { _id: id },
+        _id: id ,
       });
     } catch (e) {
+      log.error(e);
       result = Error(e);
     }
 
     return result;
   }
-
-  async create() {}
 
   async getAll(user) {
     const PostsModel = this.models.Posts;
@@ -78,9 +98,10 @@ export class PostsRepository {
 
     try {
       const posts = await PostsModel.find({}, null, { sort: { created: 'desc' }});
-      result = posts.map(post => PostsMapper.toPostDto(post.toObject(), user));
 
+      result = posts.map(post => PostsMapper.toPostDto(post.toObject(), user));
     } catch (e) {
+      log.error(e);
       result = Error(e);
     }
 
