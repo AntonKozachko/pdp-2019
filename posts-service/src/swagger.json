@@ -48,9 +48,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Posts"
+            "description": "List of posts",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "$ref": "#/definitions/Posts"
+                }
+              }
             }
           }
         }
@@ -95,20 +99,14 @@
             "bearerAuth": []
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  }
-                }
-              },
-              "required": true
-            }
-          }
-        },
+        "parameters": [{
+          "in": "query",
+          "name": "id",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }],
         "responses": {
           "201": {
             "description": "OK"
@@ -168,22 +166,24 @@
           "format": "date"
         },
         "likes": {
-          "scheme": {
-            "$ref": "#/definitions/Likes"
+          "properties": {
+            "count": {
+              "type": "number"
+            },
+            "voted": {
+              "type": "boolean"
+            }
           }
         },
         "author": {
-          "type": "string"
-        }
-      }
-    },
-    "Likes": {
-      "properties": {
-        "count": {
-          "type": "number"
-        },
-        "voted": {
-          "type": "boolean"
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
         }
       }
     },

@@ -1,3 +1,6 @@
+import isString from 'lodash/isString';
+import isEmpty from 'lodash/isEmpty';
+
 import { BaseController } from '../../helpers/base-controller';
 import logger from '../../libs/logger';
 
@@ -10,14 +13,18 @@ export class RemovePostHandler extends BaseController {
   }
 
   async executeImpl () {
-    const { user, body } = this.req;
+    const { user, query: { id } } = this.req;
 
     if (!user) {
       return this.unauthorized('Please login to delete post');
     }
 
+    if (isEmpty(id) || !isString(id)) {
+      return this.badRequest();
+    }
+
     try {
-      await this.postsRepo.delete({ id: body.id }, user);
+      await this.postsRepo.delete({ id }, user);
 
       return this.created();
     } catch (err) {
