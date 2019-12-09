@@ -1,1 +1,4 @@
-export { GestPostsHandler } from './get-all';
+export { GetPostsHandler } from './get-all';
+export { CreatePostHandler } from './create';
+export { LikePostHandler } from './like-post';
+export { RemovePostHandler } from './remove';

@@ -18,6 +18,8 @@ process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
 process.env.MODE = process.env.MODE || 'isolated';
 process.env.MONGO_HOST = process.env.MONGO_HOST || 'localhost';
 process.env.MONGO_PORT = process.env.MONGO_PORT || '27017';
+process.env.AUTH_PORT = process.env.AUTH_PORT || '9000';
+process.env.AUTH_HOST = process.env.AUTH_HOST || 'localhost';
 
 const log = logger.get('POSTS-SVC', { ignoreLogLevel: true });
 
@@ -27,6 +29,7 @@ const port = process.env.POSTS_PORT || 9010;
 log.info(`[NODE_ENV = ${process.env.NODE_ENV}]`);
 log.info(`[LOG_LEVEL = ${process.env.LOG_LEVEL}]`);
 log.info(`[POSTS_PORT = ${process.env.POSTS_PORT}]`);
+log.info(`[AUTH_PORT = ${process.env.AUTH_PORT}]`);
 log.info(`[MODE = ${process.env.MODE}]`);
 
 function onError (error) {

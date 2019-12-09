@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
-import faker from 'faker';
 import uniqueValidator from 'mongoose-unique-validator';
+
+import { imageUrlValidator } from '../../helpers/validators';
 
 import {
   documentToObject,
@@ -19,7 +20,7 @@ const postSchema = new Schema({
   },
   postCover: {
     type: String,
-    default: faker.image.image(),
+    validate: [imageUrlValidator, 'invalid image url format'],
   },
   description: {
     type: String,
@@ -31,14 +32,8 @@ const postSchema = new Schema({
     default: new Date().toISOString(),
   },
   likes: {
-    count: {
-      type: Number,
-      default: 0,
-    },
-    voters: {
-      type: [String],
-      default: [],
-    },
+    type: [String],
+    default: [],
   },
   author: {
     id: {

@@ -2,9 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
-import { Card, Button, Tooltip, Icon } from 'antd';
-
+import { Card, Button, Tooltip, Icon, notification } from 'antd';
 import { useAuth } from '../../AuthProvider/use-auth';
+import { usePosts } from '../use-posts';
+
+import './style.css';
 
 const { Meta } = Card;
 
@@ -21,37 +23,89 @@ PostCard.propTypes = {
     created: PropTypes.string,
     likes: PropTypes.shape({
       count: PropTypes.number,
-      voters: PropTypes.arrayOf(PropTypes.string),
+      voted: PropTypes.bool,
     }),
   }),
   loading: PropTypes.bool,
+  reloadPosts: PropTypes.func.isRequired,
 };
 
 PostCard.defaultProps = {
   loading: false,
 };
 
-export function PostCard({ post, loading }) {
-  const { description, title, postCover, created, likes, author } = post;
+export function PostCard({ post, loading, reloadPosts }) {
+  const { id, description, title, postCover, created, likes, author } = post;
+  const posts = usePosts();
   const auth = useAuth();
 
-  const getCover = () => <img alt="post_cover" src={postCover} />;
+  const getCover = () => (
+    <img className="post-cover" height="270" alt="post_cover" src={postCover} />
+  );
+
+  const showNotification = ({ message, type }) => {
+    notification[type]({
+      description: message,
+    });
+  };
+
+  const likePost = async () => {
+    try {
+      await posts.likePost(id);
+      reloadPosts();
+    } catch (err) {
+      showNotification({
+        type: 'warning',
+        message: err,
+      });
+    }
+  };
+
+  const removePost = async () => {
+    try {
+      await posts.deletePost(id);
+      showNotification({
+        type: 'success',
+        message: 'Post successfully removed',
+      });
+      reloadPosts();
+    } catch (err) {
+      showNotification({
+        type: 'error',
+        message: err,
+      });
+    }
+  };
 
   const likeButton = () => {
-    const userId = get(auth, 'user.payload.id');
-    const isLiked = likes.voters.includes(userId);
-
-    const theme = isLiked ? 'filled' : 'outlined';
-    const tooltipTitle = isLiked
-      ? `You and ${likes.count - 1} other`
-      : `Liked by ${likes.count} users`;
+    const { voted, count } = likes;
+    const theme = voted ? 'filled' : 'outlined';
+    const tooltipTitle = voted
+      ? `You and ${count - 1} other`
+      : `Liked by ${count} users`;
 
     return (
-      <Tooltip title={tooltipTitle}>
-        <Button shape="circle">
+      <Tooltip key="like_button" title={tooltipTitle}>
+        <Button shape="circle" onClick={likePost}>
           <Icon type="heart" theme={theme} style={{ color: 'red' }} />
         </Button>
       </Tooltip>
+    );
+  };
+
+  const removeButton = () => {
+    const { id: authorId } = author;
+
+    const userId = get(auth.user, 'payload.id', '');
+
+    const isUserPost = authorId === userId;
+
+    return (
+      isUserPost && (
+        <Button key="delete_button" shape="circle" onClick={removePost}>
+          <Icon type="delete" />
+        </Button>
+      )
     );
   };
 
@@ -65,7 +119,7 @@ export function PostCard({ post, loading }) {
       cover={getCover()}
       loading={loading}
       title={title}
-      actions={[likeButton()]}
+      actions={[removeButton(), likeButton()]}
     >
       <Meta title={description} description={`by ${author.name}`} />
     </Card>

@@ -10,17 +10,14 @@ export function usePosts() {
   const postsHost = process.env.POSTS_HOST;
   const postsPort = process.env.POSTS_PORT;
 
-  const authInstance = axios.create({
-    baseURL: `http://${postsHost}:${postsPort}/posts`,
-    timeout: 2000,
-  });
+  const baseURL = `http://${postsHost}:${postsPort}/posts`;
 
   const getPosts = async () => {
     dispatch({ type: actions.request });
 
     let apiResponse;
     try {
-      apiResponse = await authInstance.get('');
+      apiResponse = await axios.get(baseURL);
       const { data } = apiResponse;
       dispatch({ type: actions.success, payload: data });
     } catch (err) {
@@ -33,8 +30,47 @@ export function usePosts() {
     return apiResponse;
   };
 
+  const createPost = async post => {
+    try {
+      const apiResponse = await axios.post(baseURL, post);
+
+      return apiResponse;
+    } catch (err) {
+      const errMsg = get(err, 'response.data.message', err.message);
+
+      return Promise.reject(errMsg);
+    }
+  };
+
+  const likePost = async id => {
+    try {
+      const apiResponse = await axios.patch(baseURL, { id });
+
+      return apiResponse;
+    } catch (err) {
+      const errMsg = get(err, 'response.data.message', err.message);
+
+      return Promise.reject(errMsg);
+    }
+  };
+
+  const deletePost = async id => {
+    try {
+      const apiResponse = await axios.delete(baseURL, { params: { id } });
+
+      return apiResponse;
+    } catch (err) {
+      const errMsg = get(err, 'response.data.message', err.message);
+
+      return Promise.reject(errMsg);
+    }
+  };
+
   return {
     list,
     getPosts,
+    createPost,
+    likePost,
+    deletePost,
   };
 }

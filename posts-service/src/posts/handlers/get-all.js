@@ -1,15 +1,21 @@
 import { BaseController } from '../../helpers/base-controller';
-import { Posts } from '../models/post.model';
 import logger from '../../libs/logger';
 
 const log = logger.get('Get_Posts_Handler');
 
-export class GestPostsHandler extends BaseController {
+export class GetPostsHandler extends BaseController {
+  constructor (repo) {
+    super();
+    this.postsRepo = repo;
+  }
+
   async executeImpl () {
     try {
-      const posts = await Posts.find({});
+      const { user } = this.req;
 
-      return this.success(posts);
+      const dto = await this.postsRepo.getAll(user);
+
+      return this.success(dto);
     } catch (err) {
       log.error(err);
       return this.mongoError(err);
