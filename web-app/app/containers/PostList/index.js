@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { PageHeader, Button } from 'antd';
+import { PageHeader, Button, BackTop } from 'antd';
 
 import { usePosts } from './use-posts';
 import { PostCard } from './components/post-card';
@@ -27,6 +27,8 @@ export const PostList = () => {
     );
   };
 
+  const reloadPosts = () => posts.getPosts();
+
   useEffect(() => {
     posts.getPosts();
   }, []);
@@ -38,10 +40,15 @@ export const PostList = () => {
       <PageHeader title="Posts list" extra={getPageHeaderExtras()} />
       <div className="posts">
         {payload.map(post => (
-          // eslint-disable-next-line
-          <PostCard loading={loading} post={post} key={post._id} />
+          <PostCard
+            loading={loading}
+            post={post}
+            key={post.id}
+            reloadPosts={reloadPosts}
+          />
         ))}
       </div>
+      <BackTop />
     </section>
   );
 };
