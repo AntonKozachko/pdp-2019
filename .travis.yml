@@ -9,14 +9,14 @@ jobs:
   include:
     - stage: lint
       if: type = pull_request
-      script: ./devops/ci-lint.sh web-app
-    - script: ./devops/ci-lint.sh auth-service
-    - script: ./devops/ci-lint.sh posts-service
+      script: ./devops/scripts/ci-lint.sh web-app
+    - script: ./devops/scripts/ci-lint.sh auth-service
+    - script: ./devops/scripts/ci-lint.sh posts-service
     - stage: test
       if: type = pull_request
-      script: ./devops/ci-lint.sh web-app
-    - script: ./devops/ci-lint.sh auth-service
-    - script: ./devops/ci-lint.sh posts-service
+      script: ./devops/scripts/ci-test.sh web-app
+    - script: ./devops/scripts/ci-test.sh auth-service
+    - script: ./devops/scripts/ci-test.sh posts-service
     
 env:
   global:
