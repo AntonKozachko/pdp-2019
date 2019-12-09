@@ -3,12 +3,23 @@ node_js:
 - 12
 sudo: required
 script:
-- npm run ci:install
-- npm run ci:lint
-- npm run ci:test
+- npm install
+
+jobs:
+  include:
+    - stage: lint
+      if: type = pull-request
+      script: ./devops/ci-lint.sh web-app
+    - script: ./devops/ci-lint.sh auth-service
+    - script: ./devops/ci-lint.sh posts-service
+    - stage: test
+      if: type = pull-request
+      script: ./devops/ci-lint.sh web-app
+    - script: ./devops/ci-lint.sh auth-service
+    - script: ./devops/ci-lint.sh posts-service
+    
 env:
   global:
   - secure: AOas2hwqjcXazW9Q8Vwcf3XNQy0qaXeKR54T+XJ5CGxqxCEqF0Sz4Izov9Oe8hDdSTrsG7RTF5ppq0pSn6AFWrIrPnm2UGhlErgIK4GnR5M/tTywMv+84hkRpL5YrWL0D91H6xeRE3/XknTWk+P+Eo5EiySY/Q5OU1b7Jd6isfuxyiO8CmM9m6+0IJoyaX4SqgcYv3ez12wPoIOCv1KcgHYho9SBZguZFZTKgIeE88U46itaAFqHEHayMUPLYpsgPssUukL7O1M/ezv6Kxqj8ZqCokYReQ9KJP+1BlqlBa1reyEpOcNdXtIiCb3EvsKxWNLz5NV4civJEE0qXLQUkH66Mr38bImaENZ+FZE8kzc95t3dZZKDIz/f5ZWfl+px0LIp4O4YlaNryM8lLM5UNDqsWr01h1vM7IOLfe4dyrlF6+wGQUAFVk/vgMaibMbDugJ/gvaxK59PhGuRkXcWXEu43V3ONFC/T9j+XcyWdlUvXC8HAZnzBj2XhbNMPwmLt8vgimcGdox1C0eUh9bGDHdi9NX/EwHdMUPVFMj8WPqkreDddexEjGqe8tuIkb7KLJ3chvAOS+S1YVa4ZySzfpPsLu0uMfmsyhFCp0xiobbqDfttafpKfw2wonod2+AZV5LD89vsuaDOx2tSPyGlW8/5Wk9daO9Jg/ktBYhsQKo=
 after_success:
-- npm run ci:automerge
 - npm run ci:build:auth
