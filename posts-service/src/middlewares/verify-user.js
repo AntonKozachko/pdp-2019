@@ -15,10 +15,10 @@ export async function verifyUser (req, res, next) {
 
   try {
     const { data: user } = await axios.post(verifyUrl, null, {
-      headers: { 'Authorization': authorization },
+      headers: { Authorization: authorization },
     });
 
-    if(!isEmpty(user)) {
+    if (!isEmpty(user)) {
       req.user = user;
     }
   } catch (err) {

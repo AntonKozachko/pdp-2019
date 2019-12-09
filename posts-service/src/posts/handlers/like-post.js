@@ -4,7 +4,7 @@ import logger from '../../libs/logger';
 const log = logger.get('Like_Post_Handler');
 
 export class LikePostHandler extends BaseController {
-  constructor(repo) {
+  constructor (repo) {
     super();
     this.postsRepo = repo;
   }

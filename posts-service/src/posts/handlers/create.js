@@ -4,7 +4,7 @@ import logger from '../../libs/logger';
 const log = logger.get('Create_Post_Handler');
 
 export class CreatePostHandler extends BaseController {
-  constructor(repo) {
+  constructor (repo) {
     super();
     this.postsRepo = repo;
   }

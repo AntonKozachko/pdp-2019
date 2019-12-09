@@ -1,16 +1,16 @@
-import { PostsMapper } from './posts-mapper';
 import get from 'lodash/get';
+import { PostsMapper } from './posts-mapper';
 
 import logger from '../../libs/logger';
 
 const log = logger.get('Posts_Repo');
 
 export class PostsRepository {
-  constructor(models) {
+  constructor (models) {
     this.models = models;
   }
 
-  async exists(id) {
+  async exists (id) {
     const PostsModel = this.models.Posts;
 
     const result = await PostsModel.findOne({
@@ -20,15 +20,20 @@ export class PostsRepository {
     return !!result;
   }
 
-  async delete(document, user) {
+  async delete (document, user) {
     const PostsModel = this.models.Posts;
+    const { id } = document;
+    const { id: userId } = user;
 
-    return await PostsModel.deleteOne({
-      where: { _id: document.id, author: { id: user.id }},
+    return PostsModel.deleteOne({
+      $and: [
+        { _id: id },
+        { 'author.id': userId },
+      ],
     });
   }
 
-  async save(document, user) {
+  async save (document, user) {
     const PostsModel = this.models.Posts;
 
     const documentId = get(document, 'id', '');
@@ -54,10 +59,10 @@ export class PostsRepository {
     return document;
   }
 
-  async likePost(id, user) {
+  async likePost (id, user) {
     const post = await this.findPostById(id);
 
-    const isAlreadyLiked = post.likes.some(likeId => likeId === user.id);
+    const isAlreadyLiked = post.likes.some((likeId) => likeId === user.id);
 
     let result;
 
@@ -74,14 +79,14 @@ export class PostsRepository {
     return result;
   }
 
-  async findPostById(id) {
+  async findPostById (id) {
     const PostsModel = this.models.Posts;
 
     let result;
 
     try {
       result = await PostsModel.findOne({
-        _id: id ,
+        _id: id,
       });
     } catch (e) {
       log.error(e);
@@ -91,15 +96,15 @@ export class PostsRepository {
     return result;
   }
 
-  async getAll(user) {
+  async getAll (user) {
     const PostsModel = this.models.Posts;
 
     let result;
 
     try {
-      const posts = await PostsModel.find({}, null, { sort: { created: 'desc' }});
+      const posts = await PostsModel.find({}, null, { sort: { created: 'desc' } });
 
-      result = posts.map(post => PostsMapper.toPostDto(post.toObject(), user));
+      result = posts.map((post) => PostsMapper.toPostDto(post.toObject(), user));
     } catch (e) {
       log.error(e);
       result = Error(e);

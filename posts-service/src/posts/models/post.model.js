@@ -1,5 +1,4 @@
 import { Schema, model } from 'mongoose';
-import faker from 'faker';
 import uniqueValidator from 'mongoose-unique-validator';
 
 import { imageUrlValidator } from '../../helpers/validators';
