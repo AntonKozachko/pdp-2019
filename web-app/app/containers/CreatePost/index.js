@@ -14,9 +14,10 @@ const CreatePost = ({ form }) => {
     e.preventDefault();
     form.validateFields((err, values) => {
       if (!err) {
-        posts.createPost(values)
+        posts
+          .createPost(values)
           .then(() => router.push('/'))
-          .catch(err => setError(err));
+          .catch(postError => setError(postError));
       }
     });
   };
@@ -41,19 +42,14 @@ const CreatePost = ({ form }) => {
                 { required: true, message: 'Please input post title!' },
                 { max: 255, message: 'Title max symbols 255' },
               ],
-            })(
-              <Input placeholder="Post title" />,
-            )}
+            })(<Input placeholder="Post title" />)}
           </Form.Item>
           <Form.Item>
             {form.getFieldDecorator('article', {
-              rules: [{ required: true, message: 'Please input your article!' }],
-            })(
-              <Input.TextArea
-                rows={4}
-                placeholder="Post"
-              />,
-            )}
+              rules: [
+                { required: true, message: 'Please input your article!' },
+              ],
+            })(<Input.TextArea rows={4} placeholder="Post" />)}
           </Form.Item>
           <Form.Item>
             {form.getFieldDecorator('postCover')(
@@ -62,7 +58,7 @@ const CreatePost = ({ form }) => {
           </Form.Item>
           <Form.Item>
             {form.getFieldDecorator('description')(
-              <Input placeholder="Post description"/>
+              <Input placeholder="Post description" />,
             )}
           </Form.Item>
           <Form.Item>
@@ -71,8 +67,7 @@ const CreatePost = ({ form }) => {
             </Button>
           </Form.Item>
         </Form>
-
-    </Col>
+      </Col>
     </Row>
   );
 };
