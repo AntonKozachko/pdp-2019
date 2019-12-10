@@ -1,4 +1,4 @@
-target=$1
+target=$TARGET
 DOCKER_REGISTRY=antkozdocker
 DOCKER_REPO=$2
 

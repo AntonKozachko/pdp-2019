@@ -1,4 +1,4 @@
-target=$1
+target=$TARGET
 curDir=$PWD
 
 source ./devops/scripts/check-affected-projects.sh $target

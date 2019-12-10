@@ -21,11 +21,11 @@ before_script:
 script:
 - npm install
 # lint step
-- ./devops/scripts/ci-lint.sh TARGET
+- ./devops/scripts/ci-lint.sh
 # test step
-- ./devops/scripts/ci-test.sh TARGET
+- ./devops/scripts/ci-test.sh
 # build step
-- ./devops/scripts/ci-build-image.sh TARGET
+- ./devops/scripts/ci-build-image.sh
 
 # jobs:
 #   include:
