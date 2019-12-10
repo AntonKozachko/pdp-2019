@@ -4,7 +4,7 @@ DOCKER_REPO=$2
 
 source ./devops/scripts/check-affected-projects.sh $target
 
-if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_PULL_REQUEST == 0 ]; then
+if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
     echo "$(tput setaf 2)Build & Publish for $target started...$(tput sgr 0)"
 
     currentDir=$PWD

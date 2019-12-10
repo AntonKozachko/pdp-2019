@@ -3,7 +3,7 @@ curDir=$PWD
 
 source ./devops/scripts/check-affected-projects.sh $target
 
-if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_PULL_REQUEST == 1 ]; then
+if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_EVENT_TYPE == "pull_request" ]; then
   echo "$(tput setaf 2)Test $target$(tput sgr 0)"
   cd $curDir/$target
   # npm install
