@@ -1,6 +1,6 @@
 target=$TARGET
 
-if [ $TRAVIS_EVENT_TYPE == "push" && $TRAVIS_BRANCH == "master" ]; then
+if [ $TRAVIS_EVENT_TYPE == "push" ] && [ $TRAVIS_BRANCH == "master" ]; then
     echo "Trigger build image with $TRAVIS_EVENT_TYPE on $TRAVIS_BRANCH"
 
     source ./devops/scripts/check-affected-projects.sh $target
