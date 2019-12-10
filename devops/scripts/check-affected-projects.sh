@@ -3,7 +3,7 @@ target=$1
 echo "Check target $target ..."
 
 git diff --name-only $TRAVIS_COMMIT_RANGE | sort -u | uniq | grep $target > /dev/null
-if [ $? -eq 1 ]; then
+if [ $? -eq 0 ]; then
   SHOULD_BUILD="1"
   echo "Build needed"
 else
