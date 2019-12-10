@@ -20,13 +20,19 @@ before_script:
 
 script:
 - npm install
+# lint step
+- ./devops/scripts/ci-lint.sh $TARGET
+# test step
+- ./devops/scripts/ci-test.sh $TARGET
+# build step
+- ./devops/scripts/ci-build-image.sh $TARGET
 
-jobs:
-  include:
-    - stage: "Lint"
-      if: type = pull_request
-      name: $TARGET
-      script: ./devops/scripts/ci-lint.sh $TARGET
+# jobs:
+#   include:
+#     - stage: "Lint"
+#       if: type = pull_request
+#       name: $TARGET
+#       script: ./devops/scripts/ci-lint.sh $TARGET
 
     # - stage: "Test"
     #   if: type = pull_request
