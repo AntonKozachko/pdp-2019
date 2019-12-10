@@ -19,7 +19,7 @@ export class AuthenticateHandler extends BaseController {
       const user = foundUser.toObject();
       const { _id: id, ...rest } = user;
 
-      return jwt.sign({ sub: { id, ...rest }}, config.secret, { expiresIn: '30m' }, (err, token) => {
+      return jwt.sign({ sub: { id, ...rest } }, config.secret, { expiresIn: '30m' }, (err, token) => {
         if (err) {
           log.error(err);
           return this.jwtError(err);

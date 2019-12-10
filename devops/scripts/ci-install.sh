@@ -1,31 +1,13 @@
-echo "$(tput setaf 2)Install auth service$(tput sgr 0)"
-
+target=$TARGET
 curDir=$PWD
 
-source ./devops/scripts/check-affected-projects.sh
+source ./devops/scripts/check-affected-projects.sh $target
 
-if [ "$CI_BUILD_AUTH" == "BUILD" ]; then
-  cd $curDir/auth-service
+if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_EVENT_TYPE == "pull_request" ]; then
+  echo "$(tput setaf 2)Lint $target$(tput sgr 0)"
+  cd $curDir/$target
   npm install
 else
-  echo "$(tput setaf 3)Skip auth install due to absence of changes$(tput sgr 0)"
+  echo "$(tput setaf 3)Skip $target lint due to absence of changes$(tput sgr 0)"
+  exit 0
 fi
-
-echo "$(tput setaf 2)Install web-app$(tput sgr 0)"
-
-if [ "$CI_BUILD_WEB" == "BUILD" ]; then
-  cd $curDir/web-app
-  npm install
-else
-  echo "$(tput setaf 3)Skip web-app install due to absence of changes$(tput sgr 0)"
-fi
-
-echo "$(tput setaf 2)Install posts service$(tput sgr 0)"
-
-if [ "$CI_BUILD_POSTS" == "BUILD" ]; then
-  cd $curDir/posts-service
-  npm install
-else
-  echo "$(tput setaf 3)Skip posts service install due to absence of changes$(tput sgr 0)"
-fi
-

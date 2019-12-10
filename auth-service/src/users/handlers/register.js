@@ -12,7 +12,7 @@ export class RegisterHandler extends BaseController {
 
     try {
       await NewUser.save();
-      this.next();
+      return this.next();
     } catch (err) {
       log.error(err);
       return this.mongoError(err);
