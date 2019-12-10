@@ -1,15 +1,14 @@
 target=$TARGET
-DOCKER_REGISTRY=antkozdocker
-
 source ./devops/scripts/check-affected-projects.sh $target
-source ./devops/scripts/get-docker-repo-name.sh $target
 
-if [ -z "$DOCKER_REPO_NAME" ]; then
-  echo "Unknown application repo: $DOCKER_REPO_NAME"
-  exit 1
-fi
+if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then  
+    source ./devops/scripts/get-docker-repo-name.sh $target
 
-if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then
+    if [ -z "$DOCKER_REPO_NAME" ]; then
+        echo "Unknown application repo: $DOCKER_REPO_NAME"
+        exit 1
+    fi
+
     echo "$(tput setaf 2)Build & Publish for $target started...$(tput sgr 0)"
 
     currentDir=$PWD
