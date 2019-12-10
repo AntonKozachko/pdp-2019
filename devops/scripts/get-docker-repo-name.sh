@@ -7,7 +7,7 @@ elif [ $target == "auth-service" ]; then
 elif [ $target == "posts-service" ]; then
   DOCKER_REPO_NAME = "pdp-posts-svc"
 else
-  echo "Unknown application: $target"
   DOCKER_REPO_NAME = ""
+fi
 
 export DOCKER_REPO_NAME
