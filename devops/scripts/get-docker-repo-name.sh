@@ -10,6 +10,4 @@ else
   DOCKER_REPO_NAME=""
 fi
 
-echo "FOUND REPO: $DOCKER_REPO_NAME"
-
 export DOCKER_REPO_NAME
