@@ -1,7 +1,13 @@
 language: node_js
+
 node_js:
 - 12
 sudo: required
+
+before_script:
+  - chmod +x devops/scripts/ci-lint.sh
+  - chmod +x devops/scripts/ci-lint.sh
+
 script:
 - npm install
 
