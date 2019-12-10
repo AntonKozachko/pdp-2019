@@ -19,7 +19,8 @@ before_script:
   - chmod +x devops/scripts/ci-build-image.sh
 
 script:
-- npm install
+# install step
+- ./devops/scripts/ci-install.sh
 # lint step
 - ./devops/scripts/ci-lint.sh
 # test step
@@ -27,27 +28,3 @@ script:
 # build step
 - ./devops/scripts/ci-build-image.sh
 
-# jobs:
-#   include:
-#     - stage: "Lint"
-#       if: type = pull_request
-#       name: $TARGET
-#       script: ./devops/scripts/ci-lint.sh $TARGET
-
-    # - stage: "Test"
-    #   if: type = pull_request
-    #   name: "web app"
-    #   script: ./devops/scripts/ci-test.sh web-app
-    # - script: ./devops/scripts/ci-test.sh auth-service
-    #   name: "auth service"
-    # - script: ./devops/scripts/ci-test.sh posts-service
-    #   name: "posts service"
-
-    # - stage: "Build and publish"
-    #   if: type = push
-    #   name: "web app"
-    #   script: ./devops/scripts/ci-build-image.sh web-app pdp-web-app
-    # - script: ./devops/scripts/ci-build-image.sh auth-service pdp-auth-svc
-    #   name: "auth service"
-    # - script: ./devops/scripts/ci-build-image.sh posts-service pdp-posts-svc
-    #   name: "posts service"
