@@ -2,20 +2,13 @@ target=$1
 
 echo "Check target $target ..."
 
-CHANGED_FILES=($(git diff --name-only $TRAVIS_COMMIT_RANGE))
-
-containsElement () {
-  local e match="$1"
-  shift
-  for e; do [[ "$e" == "$match" ]] && return 1; done
-  return 0
-}
-
-containsElement $target "${CHANGED_FILES[@]}"
+git diff --name-only $TRAVIS_COMMIT_RANGE | sort -u | uniq | grep $target > /dev/null
 if [ $? -eq 1 ]; then
   SHOULD_BUILD="1"
+  echo "Build needed"
 else
-  SHOULD_BUILD="0"  
+  SHOULD_BUILD="0"
+  echo "Skip build"
 fi
 
 export SHOULD_BUILD
