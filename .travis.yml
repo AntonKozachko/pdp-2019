@@ -4,26 +4,41 @@ node_js:
 - 12
 sudo: required
 
+env:
+  global:
+    - secure: AOas2hwqjcXazW9Q8Vwcf3XNQy0qaXeKR54T+XJ5CGxqxCEqF0Sz4Izov9Oe8hDdSTrsG7RTF5ppq0pSn6AFWrIrPnm2UGhlErgIK4GnR5M/tTywMv+84hkRpL5YrWL0D91H6xeRE3/XknTWk+P+Eo5EiySY/Q5OU1b7Jd6isfuxyiO8CmM9m6+0IJoyaX4SqgcYv3ez12wPoIOCv1KcgHYho9SBZguZFZTKgIeE88U46itaAFqHEHayMUPLYpsgPssUukL7O1M/ezv6Kxqj8ZqCokYReQ9KJP+1BlqlBa1reyEpOcNdXtIiCb3EvsKxWNLz5NV4civJEE0qXLQUkH66Mr38bImaENZ+FZE8kzc95t3dZZKDIz/f5ZWfl+px0LIp4O4YlaNryM8lLM5UNDqsWr01h1vM7IOLfe4dyrlF6+wGQUAFVk/vgMaibMbDugJ/gvaxK59PhGuRkXcWXEu43V3ONFC/T9j+XcyWdlUvXC8HAZnzBj2XhbNMPwmLt8vgimcGdox1C0eUh9bGDHdi9NX/EwHdMUPVFMj8WPqkreDddexEjGqe8tuIkb7KLJ3chvAOS+S1YVa4ZySzfpPsLu0uMfmsyhFCp0xiobbqDfttafpKfw2wonod2+AZV5LD89vsuaDOx2tSPyGlW8/5Wk9daO9Jg/ktBYhsQKo=
+
 before_script:
   - chmod +x devops/scripts/ci-lint.sh
   - chmod +x devops/scripts/ci-test.sh
+  - chmod +x devops/scripts/ci-build-image.sh
 
 script:
 - npm install
 
 jobs:
   include:
-    - stage: lint
+    - stage: "Lint"
       if: type = pull_request
+      name: "web app"
       script: ./devops/scripts/ci-lint.sh web-app
     - script: ./devops/scripts/ci-lint.sh auth-service
+      name: "auth service"
     - script: ./devops/scripts/ci-lint.sh posts-service
-    - stage: test
+      name: "posts service"
+    - stage: "Test"
       if: type = pull_request
+      name: "web app"
       script: ./devops/scripts/ci-test.sh web-app
     - script: ./devops/scripts/ci-test.sh auth-service
+      name: "auth service"
     - script: ./devops/scripts/ci-test.sh posts-service
-    
-env:
-  global:
-  - secure: AOas2hwqjcXazW9Q8Vwcf3XNQy0qaXeKR54T+XJ5CGxqxCEqF0Sz4Izov9Oe8hDdSTrsG7RTF5ppq0pSn6AFWrIrPnm2UGhlErgIK4GnR5M/tTywMv+84hkRpL5YrWL0D91H6xeRE3/XknTWk+P+Eo5EiySY/Q5OU1b7Jd6isfuxyiO8CmM9m6+0IJoyaX4SqgcYv3ez12wPoIOCv1KcgHYho9SBZguZFZTKgIeE88U46itaAFqHEHayMUPLYpsgPssUukL7O1M/ezv6Kxqj8ZqCokYReQ9KJP+1BlqlBa1reyEpOcNdXtIiCb3EvsKxWNLz5NV4civJEE0qXLQUkH66Mr38bImaENZ+FZE8kzc95t3dZZKDIz/f5ZWfl+px0LIp4O4YlaNryM8lLM5UNDqsWr01h1vM7IOLfe4dyrlF6+wGQUAFVk/vgMaibMbDugJ/gvaxK59PhGuRkXcWXEu43V3ONFC/T9j+XcyWdlUvXC8HAZnzBj2XhbNMPwmLt8vgimcGdox1C0eUh9bGDHdi9NX/EwHdMUPVFMj8WPqkreDddexEjGqe8tuIkb7KLJ3chvAOS+S1YVa4ZySzfpPsLu0uMfmsyhFCp0xiobbqDfttafpKfw2wonod2+AZV5LD89vsuaDOx2tSPyGlW8/5Wk9daO9Jg/ktBYhsQKo=
+      name: "postsservice"
+    - stage: "Build and publish"
+      if: type = push
+      name: "web app"
+      script: ./devops/scripts/ci-build-image.sh web-app pdp-web-app
+    - script: ./devops/scripts/ci-build-image.sh auth-service pdp-auth-svc
+      name: "auth service"
+    - script: ./devops/scripts/ci-build-image.sh posts-service pdp-posts-svc
+      name: "posts service"

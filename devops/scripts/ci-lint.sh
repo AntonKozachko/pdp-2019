@@ -10,4 +10,5 @@ if [ "$SHOULD_BUILD" == "1" ]; then
   npm run lint
 else
   echo "$(tput setaf 3)Skip $target lint due to absence of changes$(tput sgr 0)"
+  exit 0
 fi
