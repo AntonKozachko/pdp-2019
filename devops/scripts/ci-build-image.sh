@@ -1,11 +1,18 @@
 target=$TARGET
-source ./devops/scripts/check-affected-projects.sh $target
 
-if [ "$SHOULD_BUILD" == "1" ] && [ $TRAVIS_EVENT_TYPE == "push" ]; then  
+if [ $TRAVIS_EVENT_TYPE == "push" ]; then
+    echo "Trigger build image with $TRAVIS_EVENT_TYPE on $TRAVIS_BRANCH"
+
+    source ./devops/scripts/check-affected-projects.sh $target
     source ./devops/scripts/get-docker-repo-name.sh $target
 
+    if [ "$SHOULD_BUILD" == "0" ]; then
+        echo "Check target failed"
+        exit 1
+    fi
+
     if [ -z "$DOCKER_REPO_NAME" ]; then
-        echo "Unknown application repo: $DOCKER_REPO_NAME"
+        echo "Unknown application repo for: $target"
         exit 1
     fi
 
