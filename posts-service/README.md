@@ -1,1 +1,1 @@
-Posts service Readme
+Posts service Readme.md
