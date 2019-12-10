@@ -6,14 +6,14 @@ if [ $TRAVIS_EVENT_TYPE == "pull_request" ]; then
     source ./devops/scripts/check-affected-projects.sh $target
     source ./devops/scripts/get-docker-repo-name.sh $target
     
-    if [ "$SHOULD_BUILD" == "0" ]; then
-        echo "Check target failed"
+    if [ -z "$DOCKER_REPO_NAME" ]; then
+        echo "$(tput setaf 1)Unknown application repo for: $target(tput sgr 0)"
         exit 1
     fi
 
-    if [ -z "$DOCKER_REPO_NAME" ]; then
-        echo "Unknown application repo for: $target"
-        exit 1
+    if [ "$SHOULD_BUILD" == "0" ]; then
+        echo "$(tput setaf 3)No changes in $target to build $DOCKER_REPO_NAME image$(tput sgr 0)"
+        exit 0
     fi
 
     # echo "$(tput setaf 2)Build & Publish for $target started...$(tput sgr 0)"
@@ -28,7 +28,7 @@ if [ $TRAVIS_EVENT_TYPE == "pull_request" ]; then
     # echo "Start building $target image"
     # docker build -t $DOCKER_REGISTRY/$DOCKER_REPO_NAME:$TRAVIS_BUILD_NUMBER .
 
-    # echo "Try to publish $target image to docker"
+    # echo "Try to publish $target image to $DOCKER_REGISTRY/$DOCKER_REPO_NAME"
     # docker push $DOCKER_REGISTRY/$DOCKER_REPO_NAME:$TRAVIS_BUILD_NUMBER || exit 1
     # echo "$(tput setaf 2)Success$(tput sgr 0)"
 else
