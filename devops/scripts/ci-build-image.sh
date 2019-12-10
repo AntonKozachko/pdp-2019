@@ -1,11 +1,11 @@
 target=$TARGET
-
-if [ $TRAVIS_EVENT_TYPE == "push" ]; then
+# change to "push"
+if [ $TRAVIS_EVENT_TYPE == "pull_request" ]; then
     echo "Trigger build image with $TRAVIS_EVENT_TYPE on $TRAVIS_BRANCH"
 
     source ./devops/scripts/check-affected-projects.sh $target
     source ./devops/scripts/get-docker-repo-name.sh $target
-
+    
     if [ "$SHOULD_BUILD" == "0" ]; then
         echo "Check target failed"
         exit 1
@@ -16,21 +16,21 @@ if [ $TRAVIS_EVENT_TYPE == "push" ]; then
         exit 1
     fi
 
-    echo "$(tput setaf 2)Build & Publish for $target started...$(tput sgr 0)"
+    # echo "$(tput setaf 2)Build & Publish for $target started...$(tput sgr 0)"
 
-    currentDir=$PWD
-    echo "Current directory $currentDir"
+    # currentDir=$PWD
+    # echo "Current directory $currentDir"
 
-    cd "$currentDir/$target"
+    # cd "$currentDir/$target"
 
-    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" || exit 1
+    # docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" || exit 1
 
-    echo "Start building $target image"
-    docker build -t $DOCKER_REGISTRY/$DOCKER_REPO_NAME:$TRAVIS_BUILD_NUMBER .
+    # echo "Start building $target image"
+    # docker build -t $DOCKER_REGISTRY/$DOCKER_REPO_NAME:$TRAVIS_BUILD_NUMBER .
 
-    echo "Try to publish $target image to docker"
-    docker push $DOCKER_REGISTRY/$DOCKER_REPO_NAME:$TRAVIS_BUILD_NUMBER || exit 1
-    echo "$(tput setaf 2)Success$(tput sgr 0)"
+    # echo "Try to publish $target image to docker"
+    # docker push $DOCKER_REGISTRY/$DOCKER_REPO_NAME:$TRAVIS_BUILD_NUMBER || exit 1
+    # echo "$(tput setaf 2)Success$(tput sgr 0)"
 else
     echo "$(tput setaf 3)Skip build $target$(tput sgr 0)"
     exit 0
