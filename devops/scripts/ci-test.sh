@@ -1,7 +1,7 @@
 target=$1
 curDir=$PWD
 
-source ./devops/scripts/check-affected-projects.sh target
+source ./devops/scripts/check-affected-projects.sh $target
 
 if [ "$SHOULD_BUILD" == "1" ]; then
   echo "$(tput setaf 2)Test $target$(tput sgr 0)"
