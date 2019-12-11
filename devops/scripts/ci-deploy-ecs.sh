@@ -11,8 +11,9 @@ if [ $TRAVIS_EVENT_TYPE == "push" ] && [ $TRAVIS_BRANCH == "master" ]; then
   export PATH=$PATH:$HOME/.local/bin
 
   source ./devops/scripts/get-docker-repo-name.sh $target
+  TASK_NAME=$DOCKER_REPO_NAME
 
-  ./devops/scripts/ecs.sh -c $PDP_CLUSTER_NAME -n $PDP_SERVICE -i "$DOCKER_URL/$DOCKER_REPO_NAME:latest" -r $AWS_REGION -t 240
+  ./devops/scripts/ecs.sh -c $PDP_CLUSTER_NAME -n $PDP_SERVICE -d $TASK_NAME -i "$DOCKER_URL/$DOCKER_REPO_NAME:latest" -r $AWS_REGION -t 240
 else
   echo "Skip deploy"
 fi
