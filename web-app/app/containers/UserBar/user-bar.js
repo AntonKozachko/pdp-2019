@@ -54,7 +54,7 @@ export const UserBar = () => {
       ) : (
         <div className="auth-actions">
           <Button icon="login" type="primary" onClick={openLoginModal}>
-            Aws bla
+            Login
           </Button>
           <Button type="secondary" onClick={openRegisterModal}>
             Register
