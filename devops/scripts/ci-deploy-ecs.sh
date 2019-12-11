@@ -12,7 +12,7 @@ if [ $TRAVIS_EVENT_TYPE == "push" ] && [ $TRAVIS_BRANCH == "master" ]; then
   source ./devops/scripts/get-docker-repo-name.sh $target
   DEPLOY_SERVICE=$DOCKER_REPO_NAME
 
-  ./devops/scripts/ecs.sh -c $PDP_CLUSTER_NAME -n $DEPLOY_SERVICE "$DOCKER_REGISTRY_URL/$DOCKER_REPO_NAME:latest" -r $AWS_REGION -t 240
+  ./devops/scripts/ecs.sh -c $PDP_CLUSTER_NAME -n $DEPLOY_SERVICE -i "$DOCKER_REGISTRY_URL/$DOCKER_REPO_NAME:latest" -r $AWS_REGION -t 240
 else
   echo "Skip deploy"
 fi
