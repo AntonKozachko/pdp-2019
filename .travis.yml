@@ -19,6 +19,7 @@ before_script:
   - chmod +x devops/scripts/ci-test.sh
   - chmod +x devops/scripts/ci-build-image.sh
   - chmod +x devops/scripts/ci-deploy-ecs.sh
+  - chmod +x devops/scripts/ecs.sh
 
 script:
 # install step
