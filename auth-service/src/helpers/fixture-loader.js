@@ -1,7 +1,6 @@
 import Fixtures from 'node-mongodb-fixtures';
 
 import { User } from '../users/models/user.model';
-import { connection } from './mongo-connection';
 import logger from '../libs/logger';
 
 const log = logger.get('FIXTURE-LOADER', { ignoreLogLevel: true });

@@ -15,7 +15,7 @@ let connection;
 if (process.env.NODE_ENV === 'production') {
   log.info(`Use ${mongoUser} to connect MongoAtlas cluster`);
   // todo: maybe store cluster url in ci
-  connection = `mongodb+srv://${mongoUser}:${mongoPwd}@pdp-mongo-cluster-rjbpc.mongodb.net/test?retryWrites=true&w=majority`
+  connection = `mongodb+srv://${mongoUser}:${mongoPwd}@pdp-mongo-cluster-rjbpc.mongodb.net/test?retryWrites=true&w=majority`;
 } else {
   connection = `mongodb://${mongoHost}:${mongoPort}/posts`;
 }
