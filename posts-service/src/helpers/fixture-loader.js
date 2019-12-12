@@ -1,10 +1,14 @@
 import Fixtures from 'node-mongodb-fixtures';
 
 import { Posts } from '../posts/models/post.model';
-import { connection } from './mongo-connection';
 import logger from '../libs/logger';
 
 const log = logger.get('FIXTURE-LOADER', { ignoreLogLevel: true });
+
+const mongoPort = process.env.MONGO_PORT;
+const mongoHost = process.env.MONGO_HOST;
+
+const connection = `mongodb://${mongoHost}:${mongoPort}/posts`;
 
 const fixtures = new Fixtures({
   dir: 'src/posts/fixtures',
