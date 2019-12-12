@@ -23,7 +23,7 @@ export default function App() {
           </Switch>
         </Layout.Content>
         <Layout.Footer style={{ textAlign: 'center' }}>
-          Created with Ant UED
+          Created with Anton Kozachko
         </Layout.Footer>
       </Layout>
     </AuthProvider>
