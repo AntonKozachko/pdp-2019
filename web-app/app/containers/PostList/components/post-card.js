@@ -115,7 +115,12 @@ export function PostCard({ post, loading, reloadPosts }) {
     <Card
       hoverable
       extra={createdDate}
-      style={{ width: '20%', margin: '20px' }}
+      style={{
+        flex: '1 1 calc((100% / 4) - 60px )',
+        margin: '10px',
+        overflow: 'hidden',
+        minWidth: '200px',
+      }}
       cover={getCover()}
       loading={loading}
       title={title}

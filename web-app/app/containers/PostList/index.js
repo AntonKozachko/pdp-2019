@@ -33,6 +33,10 @@ export const PostList = () => {
     posts.getPosts();
   }, []);
 
+  useEffect(() => {
+    posts.getPosts();
+  }, [auth.user]);
+
   const { payload, loading } = posts.list;
 
   return (

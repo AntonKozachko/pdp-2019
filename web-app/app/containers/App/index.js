@@ -11,7 +11,7 @@ import Header from '../Header';
 export default function App() {
   return (
     <AuthProvider>
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}>
         <Layout.Header style={{ backgroundColor: 'none' }}>
           <Header />
         </Layout.Header>
@@ -23,7 +23,7 @@ export default function App() {
           </Switch>
         </Layout.Content>
         <Layout.Footer style={{ textAlign: 'center' }}>
-          Created by Anton Kozachko
+          Created by Ant UED
         </Layout.Footer>
       </Layout>
     </AuthProvider>
