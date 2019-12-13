@@ -2,7 +2,13 @@
 
 exports[`<App /> should render and match the snapshot 1`] = `
 <AuthProvider>
-  <Adapter>
+  <Adapter
+    style={
+      Object {
+        "minHeight": "100vh",
+      }
+    }
+  >
     <Adapter
       style={
         Object {
