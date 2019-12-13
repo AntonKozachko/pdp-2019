@@ -45,7 +45,7 @@ export const UserBar = () => {
           <Avatar src={auth.user.payload.avatar}>
             {isEmpty(auth.user.payload.avatar) && auth.user.payload.firstname}
           </Avatar>
-          <Dropdown overlay={renderUserMenu()}>
+          <Dropdown trigger={['hover', 'click']} overlay={renderUserMenu()}>
             <div className="user-info__firstname">
               {auth.user.payload.firstname}
             </div>

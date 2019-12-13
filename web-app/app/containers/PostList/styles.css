@@ -2,6 +2,6 @@
   width: 100%;
   display: flex;
   flex-flow: row wrap;
-  justify-content: center;
+  justify-content: space-between;
   padding: 30px;
 }
