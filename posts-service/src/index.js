@@ -13,7 +13,6 @@ import { loadFixtures } from './helpers/fixture-loader';
 
 import swaggerDocument from './swagger.json';
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
 process.env.MODE = process.env.MODE || 'isolated';
 process.env.MONGO_HOST = process.env.MONGO_HOST || 'localhost';
@@ -29,7 +28,8 @@ const port = process.env.POSTS_PORT || 9010;
 log.info(`[NODE_ENV = ${process.env.NODE_ENV}]`);
 log.info(`[LOG_LEVEL = ${process.env.LOG_LEVEL}]`);
 log.info(`[POSTS_PORT = ${process.env.POSTS_PORT}]`);
-log.info(`[AUTH_PORT = ${process.env.AUTH_PORT}]`);
+log.info(`[AUTH_URL = ${process.env.AUTH_HOST}:${process.env.AUTH_PORT}]`);
+log.info(`[MONGO_URL] = ${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`)
 log.info(`[MODE = ${process.env.MODE}]`);
 
 function onError (error) {
@@ -85,7 +85,6 @@ if (process.env.MODE === 'normal') {
   connectUsersDb()
     .then(() => log.info('Db connected'))
     .then(() => loadFixtures())
-    .then(() => log.info('Load fixtures complete'))
     .catch((err) => log.error(err));
 }
 
