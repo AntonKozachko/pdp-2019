@@ -11,12 +11,12 @@ const connection = `mongodb://${mongoHost}:${mongoPort}/posts`;
 const fixtures = getFixtures();
 
 export async function loadFixtures () {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.BUILD_ENV === 'production') {
     log.info('Skip loading fixtures');
     return;
   }
 
-  const count = await Posts.count();
+  const count = await Posts.countDocuments();
 
   if (count) {
     log.info(`Found ${count} posts. Skip loading posts`);

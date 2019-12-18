@@ -26,10 +26,11 @@ let server;
 const port = process.env.POSTS_PORT || 9010;
 
 log.info(`[NODE_ENV = ${process.env.NODE_ENV}]`);
+log.info(`[BUILD_ENV = ${process.env.BUILD_ENV}]`);
 log.info(`[LOG_LEVEL = ${process.env.LOG_LEVEL}]`);
 log.info(`[POSTS_PORT = ${process.env.POSTS_PORT}]`);
 log.info(`[AUTH_URL = ${process.env.AUTH_HOST}:${process.env.AUTH_PORT}]`);
-log.info(`[MONGO_URL] = ${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`)
+log.info(`[MONGO_URL = ${process.env.MONGO_HOST}:${process.env.MONGO_PORT}]`)
 log.info(`[MODE = ${process.env.MODE}]`);
 
 function onError (error) {
@@ -65,7 +66,7 @@ function onClosing () {
 
 const app = express();
 app.set('port', port);
-if (process.env.NODE_ENV !== 'production') app.use(requestLoggerMiddleware);
+if (process.env.BUILD_ENV !== 'production') app.use(requestLoggerMiddleware);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

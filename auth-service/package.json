@@ -8,7 +8,8 @@
     "lint:fix": "npm run lint -- --fix",
     "build": "bash scripts/build.sh",
     "docker:auth:dev": "nodemon src/index-dev.js",
-    "launch:dev": "bash scripts/launch-dev.sh"
+    "launch:dev": "bash scripts/launch-dev.sh",
+    "ci:build": "bash scripts/build-prod.sh"
   },
   "dependencies": {
     "body-parser": "^1.18.3",

@@ -73,10 +73,11 @@ console.log(`[${process.env.NODE_ENV}] config used...`);
 let finalCfg;
 if (process.env.NODE_ENV === 'production') {
   // minification not used because it does not work (
-  finalCfg = webpackMerge(baseCfg, pluginsCfg);
+  finalCfg = webpackMerge(baseCfg, pluginsCfg, { mode: 'production' });
 } else {
   finalCfg = webpackMerge(baseCfg, pluginsCfg, {
     devtool: 'inline-source-map',
+    mode: 'development',
   });
 }
 
