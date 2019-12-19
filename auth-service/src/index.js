@@ -72,8 +72,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cors());
-app.options('/user/authenticate', cors());
-app.options('/user', cors());
 
 // use JWT auth to secure the api
 app.use(jwt());
