@@ -9,6 +9,11 @@ const log = logger.get('Verify_User_Middleware');
 export async function verifyUser (req, res, next) {
   const { authorization = '' } = req.headers;
 
+  if (isEmpty(authorization)) {
+    log.info('Skip verify token due to absence of authorization header');
+    return next();
+  }
+
   const verifyUrl = `http://${process.env.AUTH_HOST}:${process.env.AUTH_PORT}/user/verify`;
 
   log.info(`Verify User token: ${req.headers.authorization}`);
@@ -26,5 +31,5 @@ export async function verifyUser (req, res, next) {
     log.error(errMsg);
   }
 
-  next();
+  return next();
 }

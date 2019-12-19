@@ -8,12 +8,13 @@ WORKDIR /app/auth-service
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
 # Bundle app source
 COPY . .
+COPY /scripts/launch-prod /docker/scripts/launch
+RUN npm install
+RUN npm run ci:build
 
-EXPOSE 9000
-CMD [ "npm", "run", "docker:auth:dev" ]
+RUN rm -rf node_modules/ scripts/ src/ package.json package-lock.json
+
+EXPOSE 8000
+ENTRYPOINT ["/docker/scripts/launch"]

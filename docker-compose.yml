@@ -22,6 +22,8 @@ services:
     - "${POSTS_PORT}:${POSTS_PORT}"
     env_file:
     - ./devops/config/normal-dev.env
+    environment:
+      - AUTH_HOST=auth-svc
     depends_on:
     - mongo
 

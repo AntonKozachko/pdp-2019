@@ -12,7 +12,7 @@ const mongoPwd = process.env.MONGO_PASSWORD;
 
 let connection;
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.BUILD_ENV === 'production') {
   log.info(`Use ${mongoUser} to connect MongoAtlas cluster`);
   // todo: maybe store cluster url in ci
   connection = `mongodb+srv://${mongoUser}:${mongoPwd}@pdp-mongo-cluster-rjbpc.mongodb.net/test?retryWrites=true&w=majority`;

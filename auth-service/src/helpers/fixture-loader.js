@@ -1,22 +1,22 @@
-import Fixtures from 'node-mongodb-fixtures';
-
 import { User } from '../users/models/user.model';
 import logger from '../libs/logger';
+import { getFixtures } from './fixtures';
 
 const log = logger.get('FIXTURE-LOADER', { ignoreLogLevel: true });
 
 const mongoPort = process.env.MONGO_PORT;
 const mongoHost = process.env.MONGO_HOST;
-
 const connection = `mongodb://${mongoHost}:${mongoPort}/posts`;
 
-const fixtures = new Fixtures({
-  dir: 'src/users/fixtures',
-  mute: false,
-});
+const fixtures = getFixtures();
 
 export async function loadFixtures () {
-  const count = await User.count();
+  if (process.env.BUILD_ENV === 'production') {
+    log.info('Skip loading fixtures');
+    return;
+  }
+
+  const count = await User.countDocuments();
 
   if (count) {
     log.info(`Found ${count} users. Skip loading users`);

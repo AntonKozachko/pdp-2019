@@ -2,14 +2,11 @@ const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
 
 const baseCfg = {
   name: 'posts-service',
   target: 'node',
   cache: true,
-  externals: [nodeExternals()],
   resolve: {
     extensions: ['.js', '.json'],
     modules: [
@@ -18,7 +15,7 @@ const baseCfg = {
     ],
   },
   output: {
-    path: path.join(__dirname, './dist/posts-service'),
+    path: path.join(__dirname, './dist'),
     filename: '[name].js',
     sourceMapFilename: '[name].map',
     publicPath: '/',
@@ -46,7 +43,7 @@ const baseCfg = {
     ],
   },
   entry: {
-    bundle: './src/index-dev.js',
+    bundle: './src/index.js',
   },
   node: {
     fs: 'empty',
@@ -67,22 +64,20 @@ const pluginsCfg = {
     new LoaderOptionsPlugin({
       debug: true,
     }),
-    // new CopyWebpackPlugin([{
-    //   from: './node_modules', to: './dist/auth-service/node_modules',
-    // }]),
   ],
 };
 
-console.log('Building auth-service bundle...');
+console.log('Building posts-service bundle...');
 console.log(`[${process.env.NODE_ENV}] config used...`);
 
 let finalCfg;
 if (process.env.NODE_ENV === 'production') {
   // minification not used because it does not work (
-  finalCfg = webpackMerge(baseCfg, pluginsCfg);
+  finalCfg = webpackMerge(baseCfg, pluginsCfg, { mode: 'production' });
 } else {
   finalCfg = webpackMerge(baseCfg, pluginsCfg, {
     devtool: 'inline-source-map',
+    mode: 'development',
   });
 }
 

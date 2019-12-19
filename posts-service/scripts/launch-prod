@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+
+node /app/posts-service/dist/bundle.js

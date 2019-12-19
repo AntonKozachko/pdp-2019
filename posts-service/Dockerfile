@@ -8,12 +8,13 @@ WORKDIR /app/posts-service
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm install
-# If you are building your code for production
-# RUN npm install --only=production
-
 # Bundle app source
 COPY . .
+COPY /scripts/launch-prod /docker/scripts/launch
+RUN npm install
+RUN npm run ci:build
+
+RUN rm -rf node_modules/ scripts/ src/ package.json package-lock.json
 
 EXPOSE 9010
-CMD [ "npm", "run", "docker:posts:dev" ]
+ENTRYPOINT ["/docker/scripts/launch"]

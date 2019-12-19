@@ -23,7 +23,7 @@ function useProvideAuth() {
   const [user, dispatch] = useReducer(responseReducer, initialAuthState);
   const localStorageToken = useLocalStorage('authToken');
 
-  const authHost = process.env.AUTH_HOST;
+  const authHost = process.env.AUTH_API_HOST;
   const authPort = process.env.AUTH_PORT;
 
   const authInstance = axios.create({

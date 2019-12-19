@@ -13,12 +13,11 @@ import { loadFixtures } from './helpers/fixture-loader';
 
 import swaggerDocument from './swagger.json';
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
 process.env.MODE = process.env.MODE || 'isolated';
 process.env.MONGO_HOST = process.env.MONGO_HOST || 'localhost';
 process.env.MONGO_PORT = process.env.MONGO_PORT || '27017';
-process.env.AUTH_PORT = process.env.AUTH_PORT || '9000';
+process.env.AUTH_PORT = process.env.AUTH_PORT || '8000';
 process.env.AUTH_HOST = process.env.AUTH_HOST || 'localhost';
 
 const log = logger.get('POSTS-SVC', { ignoreLogLevel: true });
@@ -27,9 +26,11 @@ let server;
 const port = process.env.POSTS_PORT || 9010;
 
 log.info(`[NODE_ENV = ${process.env.NODE_ENV}]`);
+log.info(`[BUILD_ENV = ${process.env.BUILD_ENV}]`);
 log.info(`[LOG_LEVEL = ${process.env.LOG_LEVEL}]`);
 log.info(`[POSTS_PORT = ${process.env.POSTS_PORT}]`);
-log.info(`[AUTH_PORT = ${process.env.AUTH_PORT}]`);
+log.info(`[AUTH_URL = ${process.env.AUTH_HOST}:${process.env.AUTH_PORT}]`);
+log.info(`[MONGO_URL = ${process.env.MONGO_HOST}:${process.env.MONGO_PORT}]`);
 log.info(`[MODE = ${process.env.MODE}]`);
 
 function onError (error) {
@@ -65,7 +66,7 @@ function onClosing () {
 
 const app = express();
 app.set('port', port);
-if (process.env.NODE_ENV !== 'production') app.use(requestLoggerMiddleware);
+if (process.env.BUILD_ENV !== 'production') app.use(requestLoggerMiddleware);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -77,7 +78,6 @@ app.use('/posts', postsRouter);
 
 // swagger setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/v1', postsRouter);
 
 if (process.env.MODE === 'normal') {
   log.info('Connecting db...');
@@ -85,7 +85,6 @@ if (process.env.MODE === 'normal') {
   connectUsersDb()
     .then(() => log.info('Db connected'))
     .then(() => loadFixtures())
-    .then(() => log.info('Load fixtures complete'))
     .catch((err) => log.error(err));
 }
 

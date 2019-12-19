@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -e
+
+node /app/auth-service/dist/bundle.js

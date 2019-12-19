@@ -7,7 +7,7 @@ import { actions, responseReducer, initialState } from './reducers';
 export function usePosts() {
   const [list, dispatch] = useReducer(responseReducer, initialState);
 
-  const postsHost = process.env.POSTS_HOST;
+  const postsHost = process.env.POSTS_API_HOST;
   const postsPort = process.env.POSTS_PORT;
 
   const baseURL = `http://${postsHost}:${postsPort}/posts`;
