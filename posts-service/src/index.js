@@ -30,7 +30,7 @@ log.info(`[BUILD_ENV = ${process.env.BUILD_ENV}]`);
 log.info(`[LOG_LEVEL = ${process.env.LOG_LEVEL}]`);
 log.info(`[POSTS_PORT = ${process.env.POSTS_PORT}]`);
 log.info(`[AUTH_URL = ${process.env.AUTH_HOST}:${process.env.AUTH_PORT}]`);
-log.info(`[MONGO_URL = ${process.env.MONGO_HOST}:${process.env.MONGO_PORT}]`)
+log.info(`[MONGO_URL = ${process.env.MONGO_HOST}:${process.env.MONGO_PORT}]`);
 log.info(`[MODE = ${process.env.MODE}]`);
 
 function onError (error) {
