@@ -16,5 +16,5 @@ RUN npm run ci:build
 
 RUN rm -rf node_modules/ scripts/ src/ package.json package-lock.json
 
-EXPOSE 9000
+EXPOSE 8000
 ENTRYPOINT ["/docker/scripts/launch"]

@@ -9,15 +9,11 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:9010",
   "tags": [
     {
       "name": "Posts",
       "description": "API for posts in the system"
     }
-  ],
-  "schemes": [
-    "http"
   ],
   "consumes": [
     "application/json"

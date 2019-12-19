@@ -6,9 +6,6 @@ services:
     - "${WEB_APP_PORT}:${WEB_APP_PORT}"
     env_file:
     - ./devops/config/normal-dev.env
-    environment:
-      - AUTH_HOST=localhost
-      - POSTS_HOST=localhost
 
   auth-svc:
     build: auth-service

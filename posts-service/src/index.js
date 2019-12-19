@@ -17,7 +17,7 @@ process.env.LOG_LEVEL = process.env.LOG_LEVEL || 'info';
 process.env.MODE = process.env.MODE || 'isolated';
 process.env.MONGO_HOST = process.env.MONGO_HOST || 'localhost';
 process.env.MONGO_PORT = process.env.MONGO_PORT || '27017';
-process.env.AUTH_PORT = process.env.AUTH_PORT || '9000';
+process.env.AUTH_PORT = process.env.AUTH_PORT || '8000';
 process.env.AUTH_HOST = process.env.AUTH_HOST || 'localhost';
 
 const log = logger.get('POSTS-SVC', { ignoreLogLevel: true });
@@ -78,7 +78,6 @@ app.use('/posts', postsRouter);
 
 // swagger setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/v1', postsRouter);
 
 if (process.env.MODE === 'normal') {
   log.info('Connecting db...');

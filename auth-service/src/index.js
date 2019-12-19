@@ -24,7 +24,7 @@ process.env.MONGO_PORT = process.env.MONGO_PORT || '27017';
 const log = logger.get('AUTH-SVC', { ignoreLogLevel: true });
 
 let server;
-const port = process.env.AUTH_PORT || 9000;
+const port = process.env.AUTH_PORT || 8000;
 
 log.info(`[NODE_ENV = ${process.env.NODE_ENV}]`);
 log.info(`[BUILD_ENV = ${process.env.BUILD_ENV}]`);
@@ -86,7 +86,6 @@ app.use(jwtErrorHandler);
 
 // swagger setup
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-app.use('/api/v1', userRouter);
 
 if (process.env.MODE === 'normal') {
   log.info('Connecting db...');
