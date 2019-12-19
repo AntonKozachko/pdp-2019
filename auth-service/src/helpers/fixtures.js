@@ -7,5 +7,5 @@ export const getFixtures = () => {
       mute: false,
     });
   }
-  return;
+  return null;
 };
