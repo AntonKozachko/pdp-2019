@@ -17,4 +17,6 @@ RUN npm run ci:build
 RUN rm -rf node_modules/ scripts/ src/ package.json package-lock.json
 
 EXPOSE 9010
+
+CMD ["/bin/bash","-c","chmod +x /docker/scripts/launch"]
 ENTRYPOINT ["/docker/scripts/launch"]
