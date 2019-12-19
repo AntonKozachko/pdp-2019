@@ -28,7 +28,7 @@ function useProvideAuth() {
 
   const authInstance = axios.create({
     baseURL: `http://${authHost}:${authPort}/user`,
-    timeout: 2000,
+    timeout: 10000,
   });
 
   const login = async credentials => {
