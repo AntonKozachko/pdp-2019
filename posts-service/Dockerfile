@@ -18,4 +18,4 @@ RUN rm -rf node_modules/ scripts/ src/ package.json package-lock.json
 
 EXPOSE 9010
 
-CMD ["node" "/app/posts-service/dist/bundle.js"]
+CMD ["node", "/app/posts-service/dist/bundle.js"]

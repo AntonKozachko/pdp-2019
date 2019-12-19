@@ -18,4 +18,4 @@ RUN rm -rf node_modules/ scripts/ src/ package.json package-lock.json
 
 EXPOSE 8000
 
-CMD ["node" "/app/auth-service/dist/bundle.js"]
+CMD ["node", "/app/auth-service/dist/bundle.js"]
