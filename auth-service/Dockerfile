@@ -10,7 +10,7 @@ COPY package*.json ./
 
 # Bundle app source
 COPY . .
-COPY /scripts/launch-prod /docker/scripts/launch
+
 RUN npm install
 RUN npm run ci:build
 
@@ -18,5 +18,4 @@ RUN rm -rf node_modules/ scripts/ src/ package.json package-lock.json
 
 EXPOSE 8000
 
-CMD ["/bin/bash","-c","chmod +x /docker/scripts/launch"]
-ENTRYPOINT ["/docker/scripts/launch"]
+CMD ["node" "/app/auth-service/dist/bundle.js"]
