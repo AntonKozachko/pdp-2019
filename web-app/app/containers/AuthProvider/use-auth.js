@@ -26,10 +26,7 @@ function useProvideAuth() {
   const authHost = process.env.AUTH_API_HOST;
   const authPort = process.env.AUTH_PORT;
 
-  const authInstance = axios.create({
-    baseURL: `http://${authHost}:${authPort}/user`,
-    timeout: 10000,
-  });
+  const authInstance = axios.create({ baseURL: `http://${authHost}:${authPort}/user` });
 
   const login = async credentials => {
     dispatch({ type: actions.request });
