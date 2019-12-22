@@ -48,7 +48,7 @@ There are 4 env files in project:
 4. [normal-prod.env](devops/config/normal-prod.env) - for production build of docker containers (optional, all vars could be overwritten in AWS console)
 
 #### Pipeline
-![ci-cd_image](https://drive.google.com/file/d/1S5Aq6TGGfkMuH0A0Jl53hLsMk4U6ezxb/view?usp=sharing)
+![ci-cd_image](ci_cd_pipeline.png)
 
 1. Branching from master into feature branch:
     - make changes in one or multiple components
