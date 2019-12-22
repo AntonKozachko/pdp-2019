@@ -65,7 +65,7 @@ There are 4 env files in project:
 
 3. If all TARGET return 0 code from previous step then TRAVIS notify github repo and user is able to merge branch into master.
 4. Feature branch pushed to master.
-5. Travis-Ci triggers push master jobs with corresponding TARGET (3 jobs in parallel):
+5. Travis-Ci triggers push master jobs with corresponding TARGET (3 jobs in parallel) (start [ci-build-image](devops/scripts/ci-build-image.sh)):
     - check whether PR has changes in component corresponding TARGET via [check-affected-projects](devops/scripts/check-affected-projects.sh) if yes:
         - get docker hub repository name for current TARGET via [get-docker-repo-name](devops/scripts/get-docker-repo-name.sh) and stores in DOCKER_REPO_NAME var
         - inject all variables from *.env file and variables stored in Travis dashboard
