@@ -38,3 +38,11 @@ Nodemon will start application in watch mode. Application is available on localh
 
 ## Database
 MongoDB used to store all data. Service create users database and users collection.
+
+## Service routes
+- [POST] /user/authenticate - endpoint for authenticate user
+- [POST] /user/verify - endpoint for verifying user
+- [POST] /user - endpoint for user creation
+- [PUT] /user - endpoint for updating user information
+- [DELETE] /user - endpoint to delete user from system
+- [GET] /user/all - endpoint to retrieve information about all routes

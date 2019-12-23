@@ -38,3 +38,11 @@ Nodemon will start application in watch mode. Application is available on localh
 
 ## Database
 MongoDB used to store all data. Service create posts database and psots collection.
+
+## Service routes
+Service router use middleware to retrieve data (from auth service) about user that initiate request to posts service. Only GET request is public. All other routes is forbidden for non-authorized users.
+
+- [POST] /posts - endpoint for post creation
+- [PATCH] /posts - endpoint to perform like/remove like for post
+- [DELETE] /posts - endpoint to delete post from system
+- [GET] /posts - endpoint to retrieve all posts
